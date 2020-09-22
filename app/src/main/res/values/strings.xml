@@ -9,4 +9,11 @@
         <item>MAYANGAN</item>
         <item>WONOASIH</item>
     </string-array>
+    <string-array name="Lokasi">
+        <item>Gedung Kantor</item>
+        <item>Rumah Bank Indonesia</item>
+        <item>Power House</item>
+        <item>Gedung Penunjang</item>
+        <item>Bangunan Lainnya</item>
+    </string-array>
 </resources>

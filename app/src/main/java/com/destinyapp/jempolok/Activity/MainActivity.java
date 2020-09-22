@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -20,11 +21,14 @@ import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class MainActivity extends AppCompatActivity {
     String user,password,token,nama,foto,level,status;
     SpaceNavigationView spaceNavigationView;
     TextView item;
     Fragment fragment;
+    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
+        }
+        if(EasyPermissions.hasPermissions(MainActivity.this, galleryPermissions)) {
+
+        }else{
+            EasyPermissions.requestPermissions(MainActivity.this, "Access for storage",
+                    101, galleryPermissions);
         }
         Toast.makeText(this, "Username : "+user+" password : "+password+" Token : "+token, Toast.LENGTH_SHORT).show();
 
