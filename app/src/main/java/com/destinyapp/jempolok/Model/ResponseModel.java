@@ -1,19 +1,25 @@
 package com.destinyapp.jempolok.Model;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class ResponseModel {
     @SerializedName("statusCode")
     @Expose
+    @Nullable
     public String statusCode;
 
     @SerializedName("statusMessage")
     @Expose
+    @Nullable
     public String statusMessage;
 
     @SerializedName("data")
-    @Expose
+    @Nullable
     public DataModel data = new DataModel();
 
     public String getStatusCode() {
@@ -39,4 +45,6 @@ public class ResponseModel {
     public void setData(DataModel data) {
         this.data = data;
     }
+
+
 }

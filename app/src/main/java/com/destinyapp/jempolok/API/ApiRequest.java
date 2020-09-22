@@ -15,12 +15,17 @@ import retrofit2.http.Part;
 public interface ApiRequest {
     @FormUrlEncoded
     @POST("auth/login")
-    Call<ResponseModel> login(@Header("Authorization") String authHeader,
-                            @Field("username") String kuncifaba,
-                            @Field("password") String nama_param);
+    Call<ResponseModel> login(@Field("username") String username,
+                            @Field("password") String password);
 
     @Multipart
     @POST("Bukti")
-    Call<ResponseModel> UploadBukti(@Part("id_user") RequestBody id_user,
-                                    @Part MultipartBody.Part bukti);
+    Call<ResponseModel> UploadBukti(@Part("namaReport") RequestBody namaReport,
+                                    @Part MultipartBody.Part photo,
+                                    @Part("deskripsiReport") RequestBody deskripsiReport,
+                                    @Part("kegiatanPemeliharaan") RequestBody kegiatanPemeliharaan,
+                                    @Part("lokasi") RequestBody lokasi,
+                                    @Part("kecamatanReport") RequestBody kecamatanReport,
+                                    @Part("tanggalReport") RequestBody tanggalReport,
+                                    @Part("alasanReject") RequestBody alasanReject);
 }
