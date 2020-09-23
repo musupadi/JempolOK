@@ -14,6 +14,14 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY">
     </com.airbnb.lottie.LottieAnimationView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvIdKecamatan"
+        android:text="1"
+        android:textSize="0.0000001sp">
+
+    </TextView>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,6 +52,7 @@
                         android:layout_height="wrap_content"
                         android:text="Laporan"
                         android:gravity="center"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="22sp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"/>
@@ -58,7 +67,7 @@
                         android:focusableInTouchMode="true"
                         android:textColorHint="@color/colorAccent">
                         <EditText
-                            android:id="@+id/etUsername"
+                            android:id="@+id/etNamaLaporan"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Laporan"
@@ -73,7 +82,7 @@
                         android:focusableInTouchMode="true"
                         android:textColorHint="@color/colorAccent">
                         <EditText
-                            android:id="@+id/etPassword"
+                            android:id="@+id/etDeskripsi"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Deskripsi"
@@ -145,7 +154,7 @@
                             android:id="@+id/etDetailLokasi"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Alasan"
+                            android:hint="Detail Lokasi"
                             android:ems="10"
                             android:inputType="text|textMultiLine"
                             android:textSize="20sp"/>
@@ -160,7 +169,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <Button
                             android:id="@+id/btnUpload"
                             android:layout_width="match_parent"
@@ -182,7 +191,14 @@
                             android:id="@+id/tvGambar"
                             android:visibility="gone"/>
                     </LinearLayout>
-
+                    <Button
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"
+                        android:id="@+id/btnSubmit"
+                        android:textColor="@color/colorWhite"
+                        android:background="@color/colorPrimary"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

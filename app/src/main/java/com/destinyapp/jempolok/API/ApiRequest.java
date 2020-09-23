@@ -7,6 +7,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -19,13 +20,18 @@ public interface ApiRequest {
                             @Field("password") String password);
 
     @Multipart
-    @POST("Bukti")
-    Call<ResponseModel> UploadBukti(@Part("namaReport") RequestBody namaReport,
+    @POST("report")
+    Call<ResponseModel> Laporan(@Header("Authorization") String authHeader,
+                                    @Part("namaReport") RequestBody namaReport,
                                     @Part MultipartBody.Part photo,
                                     @Part("deskripsiReport") RequestBody deskripsiReport,
                                     @Part("kegiatanPemeliharaan") RequestBody kegiatanPemeliharaan,
                                     @Part("lokasi") RequestBody lokasi,
+                                    @Part("detailLokasi") RequestBody detailLokasi,
                                     @Part("kecamatanReport") RequestBody kecamatanReport,
                                     @Part("tanggalReport") RequestBody tanggalReport,
                                     @Part("alasanReject") RequestBody alasanReject);
+
+    @GET("kecamatan")
+    Call<ResponseModel> Kecamatan(@Header("Authorization") String authHeader);
 }

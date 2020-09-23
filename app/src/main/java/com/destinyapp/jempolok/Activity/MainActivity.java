@@ -21,6 +21,10 @@ import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             EasyPermissions.requestPermissions(MainActivity.this, "Access for storage",
                     101, galleryPermissions);
         }
-        Toast.makeText(this, "Username : "+user+" password : "+password+" Token : "+token, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Username : "+user+" password : "+password+" Token : "+token, Toast.LENGTH_SHORT).show();
 
         spaceNavigationView=findViewById(R.id.space);
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);

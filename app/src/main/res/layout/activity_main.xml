@@ -5,11 +5,20 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical">
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_weight="1"
+        app:lottie_loop="true"
+        app:lottie_fileName="animation blue waves.json"
+        app:lottie_autoPlay="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY">
+    </com.airbnb.lottie.LottieAnimationView>
     <FrameLayout
         android:id="@+id/Container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?actionBarSize">
+        android:layout_marginBottom="75dp">
 
     </FrameLayout>
 
@@ -17,7 +26,7 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/space"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="75dp"
         android:layout_gravity="bottom"
         app:active_item_color="@color/colorConcrete"
         app:centre_button_color="@color/centre_button_color"

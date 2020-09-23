@@ -3,11 +3,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="Kecamatan">
-        <item>KADEMANGAN</item>
-        <item>KANIGARAN</item>
-        <item>KODOPOK</item>
-        <item>MAYANGAN</item>
-        <item>WONOASIH</item>
+        <item>Kabupaten Lebak</item>
+        <item>Kabupaten Pandeglang</item>
+        <item>Kabupaten Serang</item>
+        <item>Kabupaten Tangerang</item>
+        <item>Kota Tangerang</item>
+        <item>Kota Cilegon</item>
+        <item>Kota Serang</item>
+        <item>Kota Tangerang Selatan</item>
     </string-array>
     <string-array name="Lokasi">
         <item>Gedung Kantor</item>

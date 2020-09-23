@@ -15,17 +15,34 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.destinyapp.jempolok.API.ApiRequest;
+import com.destinyapp.jempolok.API.RetroServer;
+import com.destinyapp.jempolok.Model.Musupadi;
+import com.destinyapp.jempolok.Model.ResponseModel;
 import com.destinyapp.jempolok.R;
+import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Logger;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FormLaporanActivity extends AppCompatActivity {
     //Dellaroy Logic
@@ -50,12 +67,16 @@ public class FormLaporanActivity extends AppCompatActivity {
     public static final String IMAGE_DIRECTORY_NAME = "Android File Upload";
     ProgressDialog pDialog;
     String postBukti= "";
-    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    Button upload;
+    Button upload,submit;
     //ONCLICK
     Boolean Gambar = false;
     ImageView gambar;
     TextView tvGambar;
+    EditText Laporan,Deskripsi,Kegiatan,Alasan,DetailLokasi;
+    Spinner Kecamatan,Lokasi;
+    TextView Kec;
+    String user,password,token,nama,foto,level,status;
+    DB_Helper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +84,28 @@ public class FormLaporanActivity extends AppCompatActivity {
         upload = findViewById(R.id.btnUpload);
         gambar = findViewById(R.id.ivGambar);
         tvGambar = findViewById(R.id.tvGambar);
+        submit = findViewById(R.id.btnSubmit);
+        Laporan = findViewById(R.id.etNamaLaporan);
+        Deskripsi = findViewById(R.id.etDeskripsi);
+        Kegiatan = findViewById(R.id.etKegiatanPemeliharaan);
+        Alasan = findViewById(R.id.etAlasan);
+        DetailLokasi = findViewById(R.id.etDetailLokasi);
+        Kecamatan = findViewById(R.id.spKecamataan);
+        Kec = findViewById(R.id.tvIdKecamatan);
+        Lokasi = findViewById(R.id.spLokasi);
+        dbHelper = new DB_Helper(FormLaporanActivity.this);
+        Cursor cursor = dbHelper.checkUser();
+        if (cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                user = cursor.getString(0);
+                password = cursor.getString(1);
+                token = cursor.getString(2);
+                nama = cursor.getString(3);
+                foto = cursor.getString(4);
+                level = cursor.getString(5);
+                status = cursor.getString(6);
+            }
+        }
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +115,110 @@ public class FormLaporanActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
             }
         });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Checker();
+            }
+        });
     }
+    private void Checker(){
+        if (Laporan.getText().toString().isEmpty()){
+            Toast.makeText(this, "Masukan Laporan", Toast.LENGTH_SHORT).show();
+        }else if(Deskripsi.getText().toString().isEmpty()){
+            Toast.makeText(this, "Masukan Deskripsi", Toast.LENGTH_SHORT).show();
+        }else if(Kegiatan.getText().toString().isEmpty()){
+            Toast.makeText(this, "Masukan Kegiatan", Toast.LENGTH_SHORT).show();
+        }else if(DetailLokasi.getText().toString().isEmpty()){
+            Toast.makeText(this, "Masukan Detail Lokasi", Toast.LENGTH_SHORT).show();
+        }else if(Alasan.getText().toString().isEmpty()){
+            Toast.makeText(this, "Masukan Alasan", Toast.LENGTH_SHORT).show();
+        }else if(postBukti==""){
+            Toast.makeText(this, "Masukan Gambar", Toast.LENGTH_SHORT).show();
+        }else{
+            Logic();
+        }
+    }
+    private void Logic(){
+        final ProgressDialog pd = new ProgressDialog(FormLaporanActivity.this);
+        pd.setMessage("Sedang Menyimpan data ke Server");
+        pd.setCancelable(false);
+        pd.show();
+        File file = new File(postBukti);
+        Musupadi musupadi = new Musupadi();
+        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo", file.getName(), fileReqBody);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Data = api.Laporan(
+                musupadi.AUTH(token),
+                RequestBody.create(MediaType.parse("text/plain"),Laporan.getText().toString()),
+                partPhoto,
+                RequestBody.create(MediaType.parse("text/plain"),Deskripsi.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"),Kegiatan.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"),Lokasi.getSelectedItem().toString()),
+                RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
+                RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
+                RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString())
+        );
+        Data.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
+                        pd.hide();
+                        Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Login(pd);
+                    }
+                }catch (Exception e){
+                    Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                    pd.hide();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Login(pd);
+            }
+        });
+//        Call<ResponseModel> Upload = api.UploadBukti()
+    }
+    private void Login(final ProgressDialog pd){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> login =api.login(user,password);
+        login.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        dbHelper.Logout();
+                        dbHelper.saveUser(user,password,response.body().getData().accessToken,response.body().getData().namaUser,response.body().getData().fotoUser,response.body().getData().levelUser,response.body().getData().statusUser);
+                        Logic();
+                    }else{
+                        Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        pd.hide();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(FormLaporanActivity.this, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                    pd.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+//                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FormLaporanActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                pd.hide();
+            }
+        });
+    }
+    //Dellaroy Logic
     public Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
     }
@@ -134,16 +280,15 @@ public class FormLaporanActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PICK_PHOTO) {
             if (data != null) {
                 // Get the Image from data
-
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                Cursor cursor = FormLaporanActivity.this.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 assert cursor != null;
                 cursor.moveToFirst();
 
@@ -162,6 +307,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                     gambar.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                     tvGambar.setText(filename);
                     Gambar=false;
+                    Toast.makeText(this, filename, Toast.LENGTH_SHORT).show();
                 }
             }
         }
