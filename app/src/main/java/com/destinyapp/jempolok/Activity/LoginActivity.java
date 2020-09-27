@@ -2,6 +2,7 @@ package com.destinyapp.jempolok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -54,6 +55,10 @@ public class LoginActivity extends AppCompatActivity {
         return Check;
     }
     private void Logic(){
+        final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Sedang Mencoba Login");
+        pd.setCancelable(false);
+        pd.show();
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> login =api.login(user.getText().toString(),password.getText().toString());
         login.enqueue(new Callback<ResponseModel>() {
@@ -61,22 +66,25 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
-                        dbHelper.saveUser(user.getText().toString(),password.getText().toString(),response.body().getData().accessToken,response.body().getData().namaUser,response.body().getData().fotoUser,response.body().getData().levelUser,response.body().getData().statusUser);
+                        dbHelper.saveUser(user.getText().toString(),password.getText().toString(),response.body().getData().get(0).accessToken,response.body().getData().get(0).namaUser,response.body().getData().get(0).fotoUser,response.body().getData().get(0).levelUser,response.body().getData().get(0).statusUser);
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);
                         finish();
                     }else{
                         Toast.makeText(LoginActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
+                    pd.hide();
                 }catch (Exception e){
                     Toast.makeText(LoginActivity.this, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                    pd.hide();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
 //                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-                Toast.makeText(LoginActivity.this, "Username Atau Password Salah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                pd.hide();
             }
         });
     }

@@ -20,7 +20,7 @@ public class ResponseModel {
 
     @SerializedName("data")
     @Nullable
-    public DataModel data = new DataModel();
+    List<DataModel> data;
 
     public String getStatusCode() {
         return statusCode;
@@ -38,13 +38,12 @@ public class ResponseModel {
         this.statusMessage = statusMessage;
     }
 
-    public DataModel getData() {
+    @Nullable
+    public List<DataModel> getData() {
         return data;
     }
 
-    public void setData(DataModel data) {
+    public void setData(@Nullable List<DataModel> data) {
         this.data = data;
     }
-
-
 }
