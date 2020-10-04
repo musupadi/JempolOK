@@ -20,7 +20,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         final DB_Helper dbHelper = new DB_Helper(SplashScreenActivity.this);
         Cursor cursor = dbHelper.checkUser();
         if (cursor.getCount()>0){
-            Intent intent = new Intent(SplashScreenActivity.this,MainActivity.class);
+            Intent intent = new Intent(SplashScreenActivity.this,HomeActivity.class);
             startActivity(intent);
             finish();
         }else{

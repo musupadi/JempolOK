@@ -114,10 +114,7 @@ public class HomeFragment extends Fragment {
             ivHeader.setImageResource(R.drawable.night);
         }
         Musupadi musupadi = new Musupadi();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = new Date();
-        String thisDay = dateFormat.format(date);
-        tvTgl.setText(musupadi.getToday()+", "+thisDay);
+        tvTgl.setText(musupadi.getToday()+", "+musupadi.thisDay());
         laporanKerusakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
