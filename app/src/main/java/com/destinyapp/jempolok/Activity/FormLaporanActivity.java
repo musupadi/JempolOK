@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,10 +78,12 @@ public class FormLaporanActivity extends AppCompatActivity {
     TextView Kec;
     String user,password,token,nama,foto,level,status;
     DB_Helper dbHelper;
+    RelativeLayout back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_laporan);
+        back = findViewById(R.id.relativeBack);
         upload = findViewById(R.id.btnUpload);
         gambar = findViewById(R.id.ivGambar);
         tvGambar = findViewById(R.id.tvGambar);
@@ -119,6 +122,12 @@ public class FormLaporanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Checker();
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }

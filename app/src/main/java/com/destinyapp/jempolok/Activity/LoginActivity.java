@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
-                        dbHelper.saveUser(user.getText().toString(),password.getText().toString(),response.body().getData().accessToken,response.body().getData().namaUser,response.body().getData().fotoUser,response.body().getData().levelUser,response.body().getData().statusUser);
+                        dbHelper.saveUser(user.getText().toString(),password.getText().toString(),response.body().getData().get(0).accessToken,response.body().getData().get(0).namaUser,response.body().getData().get(0).fotoUser,response.body().getData().get(0).levelUser,response.body().getData().get(0).statusUser);
                         Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                         startActivity(intent);
                         finish();
