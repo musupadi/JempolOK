@@ -9,6 +9,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Musupadi {
+    public String BASE_URL(){
+        String BASE_URL = "https://jempol.destinyconsultant.tech";
+        return BASE_URL;
+    }
     public String AUTH(String auth){
         String authHeader = "Bearer "+auth;
         return authHeader;

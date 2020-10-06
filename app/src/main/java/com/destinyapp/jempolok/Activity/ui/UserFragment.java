@@ -1,60 +1,40 @@
 package com.destinyapp.jempolok.Activity.ui;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.destinyapp.jempolok.Activity.HomeActivity;
+import com.destinyapp.jempolok.Activity.LoginActivity;
+import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.R;
+import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class UserFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    String user,password,token,nama,foto,level,status;
+    ImageView Profile;
+    TextView Username,Nama,Level;
+    Musupadi musupadi;
+    Button EditProfile,ChangePassword;
     public UserFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,5 +42,36 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Profile = view.findViewById(R.id.ivProfile);
+        Username = view.findViewById(R.id.tvUsername);
+        Nama = view.findViewById(R.id.tvNama);
+        Level = view.findViewById(R.id.tvLevel);
+        musupadi = new Musupadi();
+        final DB_Helper dbHelper = new DB_Helper(getActivity());
+        Cursor cursor = dbHelper.checkUser();
+        if (cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                user = cursor.getString(0);
+                password = cursor.getString(1);
+                token = cursor.getString(2);
+                nama = cursor.getString(3);
+                foto = cursor.getString(4);
+                level = cursor.getString(5);
+                status = cursor.getString(6);
+            }
+            String URL = musupadi.BASE_URL();
+            Glide.with(getActivity())
+                    .load(URL+foto)
+                    .into(Profile);
+            Username.setText(user);
+            Nama.setText(nama);
+            Level.setText(level);
+        }
+
     }
 }

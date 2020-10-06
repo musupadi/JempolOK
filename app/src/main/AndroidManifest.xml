@@ -21,10 +21,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.HomeActivity"
+        <activity android:name=".Activity.CheckLaporanActivity"
             android:theme="@style/AppThemeNoAction"></activity>
-        <activity android:name=".Activity.FormLaporanActivity"
-            android:theme="@style/AppThemeNoAction"/>
+        <activity
+            android:name=".Activity.HomeActivity"
+            android:theme="@style/AppThemeNoAction" />
+        <activity
+            android:name=".Activity.FormLaporanActivity"
+            android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".Activity.LoginActivity"
             android:theme="@style/AppThemeNoAction" />

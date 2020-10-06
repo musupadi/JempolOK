@@ -181,8 +181,11 @@ public class FormLaporanActivity extends AppCompatActivity {
                         pd.hide();
                         Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
                         startActivity(intent);
-                    }else{
+                    }else if(response.body().getStatusCode().equals("002")){
                         Login(pd);
+                    }else{
+                        Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        pd.hide();
                     }
                 }catch (Exception e){
                     Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
@@ -193,7 +196,8 @@ public class FormLaporanActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Login(pd);
+                Toast.makeText(FormLaporanActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                pd.hide();
             }
         });
 //        Call<ResponseModel> Upload = api.UploadBukti()

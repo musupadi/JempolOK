@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.destinyapp.jempolok.Activity.CheckLaporanActivity;
 import com.destinyapp.jempolok.Activity.FormLaporanActivity;
 import com.destinyapp.jempolok.Activity.MainActivity;
 import com.destinyapp.jempolok.Model.Musupadi;
@@ -33,7 +34,7 @@ import java.util.Date;
  */
 public class HomeFragment extends Fragment {
 
-    LinearLayout laporanKerusakan;
+    LinearLayout laporanKerusakan,checklaporan;
     LinearLayout Pelaksana,Pengguna;
     String user,password,token,nama,foto,level,status;
     DB_Helper dbHelper;
@@ -73,6 +74,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         laporanKerusakan = view.findViewById(R.id.linearLaporanKerusakan);
+        checklaporan = view.findViewById(R.id.linearCheckLaporan);
         Pelaksana = view.findViewById(R.id.LinearPelaksana);
         Pengguna = view.findViewById(R.id.LinearPengguna);
         ivHeader = view.findViewById(R.id.ivHeader);
@@ -121,6 +123,12 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
                 startActivity(intent);
             }
+        });
+        checklaporan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
+                startActivity(intent);            }
         });
     }
 }

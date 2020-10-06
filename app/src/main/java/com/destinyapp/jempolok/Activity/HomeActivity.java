@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.destinyapp.jempolok.Activity.ui.HomeFragment;
+import com.destinyapp.jempolok.Activity.ui.SettingFragment;
 import com.destinyapp.jempolok.Activity.ui.UserFragment;
 import com.destinyapp.jempolok.R;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
@@ -146,7 +147,7 @@ public class HomeActivity extends AppCompatActivity {
         TBeranda.setTextColor(Color.BLACK);
         TAkun.setTextColor(Color.BLACK);
         TSetting.setTextColor(Color.rgb(142,151,255));
-        fragment = new UserFragment();
+        fragment = new SettingFragment();
         ChangeFragment(fragment);
     }
     private void ChangeFragment(Fragment fragment){

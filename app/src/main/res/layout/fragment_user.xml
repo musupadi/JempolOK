@@ -4,11 +4,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.ui.UserFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_menu"
+            android:padding="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/ivProfile"
+                android:src="@drawable/jempol"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:id="@+id/tvNama"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:id="@+id/tvUsername"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:id="@+id/tvLevel"/>
+            <Button
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_rounded_primary"
+                android:text="Edit Profile"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/roboto"/>
+            <Button
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_rounded_primary"
+                android:text="Ubah Password"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/roboto"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
 </FrameLayout>

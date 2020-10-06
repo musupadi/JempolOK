@@ -5,28 +5,44 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".Activity.ui.SettingFragment">
-    <androidx.cardview.widget.CardView
+    <LinearLayout
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="4dp"
-        card_view:cardCornerRadius="4dp">
-        <LinearLayout
+        android:orientation="vertical">
+        <Button
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Logout"
-                android:id="@+id/btnLogout"
-                android:textColor="@color/colorWhite"
-                android:background="@color/colorPrimary"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            android:text="Kontak Kami"
+            android:id="@+id/btnContact"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_rounded_primary"/>
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terms &amp; Condition (Privacy)"
+            android:id="@+id/btnPrivacy"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_rounded_primary"/>
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Saran"
+            android:id="@+id/btnSaran"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_rounded_primary"/>
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:id="@+id/btnLogout"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_rounded_primary"/>
+    </LinearLayout>
 
 
 </RelativeLayout>
