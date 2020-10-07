@@ -32,6 +32,10 @@ public interface ApiRequest {
                                     @Part("tanggalReport") RequestBody tanggalReport,
                                     @Part("alasanReject") RequestBody alasanReject);
 
+    @GET("report")
+    Call<ResponseModel> Report(@Header("Authorization") String authHeader);
+
+
     @GET("kecamatan")
     Call<ResponseModel> Kecamatan(@Header("Authorization") String authHeader);
 }
