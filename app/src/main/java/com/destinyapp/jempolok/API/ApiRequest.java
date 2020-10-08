@@ -32,8 +32,56 @@ public interface ApiRequest {
                                     @Part("tanggalReport") RequestBody tanggalReport,
                                     @Part("alasanReject") RequestBody alasanReject);
 
+    @Multipart
+    @POST("report")
+    Call<ResponseModel> Laporan2(@Header("Authorization") String authHeader,
+                                 @Part("namaReport") RequestBody namaReport,
+                                 @Part MultipartBody.Part photo,
+                                 @Part MultipartBody.Part photo2,
+                                 @Part("deskripsiReport") RequestBody deskripsiReport,
+                                 @Part("kegiatanPemeliharaan") RequestBody kegiatanPemeliharaan,
+                                 @Part("lokasi") RequestBody lokasi,
+                                 @Part("detailLokasi") RequestBody detailLokasi,
+                                 @Part("kecamatanReport") RequestBody kecamatanReport,
+                                 @Part("tanggalReport") RequestBody tanggalReport,
+                                 @Part("alasanReject") RequestBody alasanReject);
+
+    @Multipart
+    @POST("report")
+    Call<ResponseModel> Laporan3(@Header("Authorization") String authHeader,
+                                 @Part("namaReport") RequestBody namaReport,
+                                 @Part MultipartBody.Part photo,
+                                 @Part MultipartBody.Part photo2,
+                                 @Part MultipartBody.Part photo3,
+                                 @Part("deskripsiReport") RequestBody deskripsiReport,
+                                 @Part("kegiatanPemeliharaan") RequestBody kegiatanPemeliharaan,
+                                 @Part("lokasi") RequestBody lokasi,
+                                 @Part("detailLokasi") RequestBody detailLokasi,
+                                 @Part("kecamatanReport") RequestBody kecamatanReport,
+                                 @Part("tanggalReport") RequestBody tanggalReport,
+                                 @Part("alasanReject") RequestBody alasanReject);
+
+    @Multipart
+    @POST("report")
+    Call<ResponseModel> Laporan4(@Header("Authorization") String authHeader,
+                                 @Part("namaReport") RequestBody namaReport,
+                                 @Part MultipartBody.Part photo,
+                                 @Part MultipartBody.Part photo2,
+                                 @Part MultipartBody.Part photo3,
+                                 @Part MultipartBody.Part photo4,
+                                 @Part("deskripsiReport") RequestBody deskripsiReport,
+                                 @Part("kegiatanPemeliharaan") RequestBody kegiatanPemeliharaan,
+                                 @Part("lokasi") RequestBody lokasi,
+                                 @Part("detailLokasi") RequestBody detailLokasi,
+                                 @Part("kecamatanReport") RequestBody kecamatanReport,
+                                 @Part("tanggalReport") RequestBody tanggalReport,
+                                 @Part("alasanReject") RequestBody alasanReject);
+
     @GET("report")
     Call<ResponseModel> Report(@Header("Authorization") String authHeader);
+
+    @GET("teknisi")
+    Call<ResponseModel> Teknisi(@Header("Authorization") String authHeader);
 
 
     @GET("kecamatan")

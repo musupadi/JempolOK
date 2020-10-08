@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB_Helper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "jempol.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     //Account
     public static final String TABLE_NAME_ACCOUNT = "account";
     public static final String COLUMN_EMAIL = "username";
@@ -18,7 +18,9 @@ public class DB_Helper extends SQLiteOpenHelper {
     public static final String COLUMN_FOTO = "foto";
     public static final String COLUMN_LEVEL = "level";
     public static final String COLUMN_STATUS = "status";
-
+    //Teknisi
+    public static final String TABLE_NAME_TEKNISI = "teknisi";
+    public static final String ID_TEKNISI = "id_teknisi";
     public DB_Helper(Context context){super(
             context,DATABASE_NAME,null,DATABASE_VERSION);
     }
@@ -34,11 +36,15 @@ public class DB_Helper extends SQLiteOpenHelper {
                 COLUMN_LEVEL+" TEXT NOT NULL, "+
                 COLUMN_STATUS+" TEXT NOT NULL);"
         );
+        db.execSQL("CREATE TABLE "+TABLE_NAME_TEKNISI+" (" +
+                ID_TEKNISI+" TEXT NOT NULL);"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ACCOUNT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_TEKNISI);
         this.onCreate(db);
     }
     public void saveUser(String username,String password,String token,String nama,String foto,String level,String status){
@@ -54,14 +60,35 @@ public class DB_Helper extends SQLiteOpenHelper {
         db.insert(TABLE_NAME_ACCOUNT,null,values);
         db.close();
     }
+    public void saveIDTeknisi(String id){
+        SQLiteDatabase db =this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ID_TEKNISI, id);
+        db.insert(TABLE_NAME_TEKNISI,null,values);
+        db.close();
+    }
     public Cursor checkUser(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query ="SELECT * FROM "+TABLE_NAME_ACCOUNT;
         Cursor cursor = db.rawQuery(query,null);
         return cursor;
     }
+    public  Cursor checkTeknisi(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query ="SELECT * FROM "+TABLE_NAME_TEKNISI;
+        Cursor cursor = db.rawQuery(query,null);
+        return cursor;
+    }
+    public void resetTeknisi(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+TABLE_NAME_TEKNISI+"");
+    }
+    public void deleteTeknisi(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+TABLE_NAME_TEKNISI+" WHERE "+ID_TEKNISI+" = "+id);
+    }
     public void Logout(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+TABLE_NAME_ACCOUNT+"");
+        db.execSQL("DELETE FROM "+TABLE_NAME_ACCOUNT);
     }
 }

@@ -274,33 +274,191 @@
                             android:text="Pilih Foto"
                             android:textColor="@color/colorAccent"
                             android:textSize="20sp"/>
-                        <LinearLayout
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <Button
-                                android:id="@+id/btnUpload"
+                            android:layout_gravity="center"
+                            android:elevation="14dp"
+                            android:layout_margin="10dp"
+                            app:cardCornerRadius="14dp">
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Upload"
-                                android:background="@drawable/btn_rounded_primary"
-                                android:textColor="@color/colorWhite"
-                                android:layout_margin="10dp"
-                                android:fontFamily="@font/roboto"/>
-                            <ImageView
-                                android:visibility="gone"
-                                android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:layout_margin="10dp"
-                                android:id="@+id/ivGambar"/>
-                            <TextView
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+                                <Button
+                                    android:id="@+id/btnUpload"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Upload"
+                                    android:background="@drawable/btn_rounded_primary"
+                                    android:textColor="@color/colorWhite"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="@font/roboto"/>
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:layout_margin="10dp"
+                                    android:id="@+id/ivGambar"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nama File"
+                                    android:id="@+id/tvGambar"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/roboto"
+                                    android:visibility="gone"/>
+                                <Button
+                                    android:id="@+id/btnTambah"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tambah Gambar"
+                                    android:background="@drawable/btn_rounded_primary"
+                                    android:textColor="@color/colorWhite"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="@font/roboto"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:elevation="14dp"
+                            android:layout_margin="10dp"
+                            app:cardCornerRadius="14dp"
+                            android:id="@+id/linearUpload2"
+                            android:visibility="gone">
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nama File"
-                                android:id="@+id/tvGambar"
-                                android:fontFamily="@font/roboto"
-                                android:visibility="gone"/>
-                        </LinearLayout>
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+                                <Button
+                                    android:id="@+id/btnUpload2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Upload"
+                                    android:background="@drawable/btn_rounded_primary"
+                                    android:textColor="@color/colorWhite"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="@font/roboto"/>
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:layout_margin="10dp"
+                                    android:id="@+id/ivGambar2"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nama File"
+                                    android:id="@+id/tvGambar2"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/roboto"
+                                    android:visibility="gone"/>
+                                <Button
+                                    android:id="@+id/btnTambah2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tambah Gambar"
+                                    android:background="@drawable/btn_rounded_primary"
+                                    android:textColor="@color/colorWhite"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="@font/roboto"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:elevation="14dp"
+                            android:layout_margin="10dp"
+                            app:cardCornerRadius="14dp"
+                            android:id="@+id/linearUpload3"
+                            android:visibility="gone">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+                                <Button
+                                    android:id="@+id/btnUpload3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Upload"
+                                    android:background="@drawable/btn_rounded_primary"
+                                    android:textColor="@color/colorWhite"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="@font/roboto"/>
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:layout_margin="10dp"
+                                    android:id="@+id/ivGambar3"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nama File"
+                                    android:id="@+id/tvGambar3"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/roboto"
+                                    android:visibility="gone"/>
+                                <Button
+                                    android:id="@+id/btnTambah3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tambah Gambar"
+                                    android:background="@drawable/btn_rounded_primary"
+                                    android:textColor="@color/colorWhite"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="@font/roboto"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:elevation="14dp"
+                            android:layout_margin="10dp"
+                            app:cardCornerRadius="14dp"
+                            android:id="@+id/linearUpload4"
+                            android:visibility="gone">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+                                <Button
+                                    android:id="@+id/btnUpload4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Upload"
+                                    android:background="@drawable/btn_rounded_primary"
+                                    android:textColor="@color/colorWhite"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="@font/roboto"/>
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:layout_margin="10dp"
+                                    android:id="@+id/ivGambar4"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nama File"
+                                    android:id="@+id/tvGambar4"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/roboto"
+                                    android:visibility="gone"/>
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
                         <Button
                             android:layout_margin="10dp"
                             android:layout_width="match_parent"

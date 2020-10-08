@@ -156,79 +156,34 @@
                         android:layout_height="150dp"
                         android:orientation="horizontal">
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            card_view:cardElevation="4dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginBottom="4dp"
-                            card_view:cardCornerRadius="4dp">
-                            <LinearLayout
-                                android:layout_weight="1"
-                                android:id="@+id/linearKerusakan"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <com.airbnb.lottie.LottieAnimationView
-                                    android:layout_weight="1"
-                                    app:lottie_loop="true"
-                                    app:lottie_fileName="broken_report.json"
-                                    app:lottie_autoPlay="true"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-                                </com.airbnb.lottie.LottieAnimationView>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="3"
-                                    android:text="Laporan Kerusakan"
-                                    android:fontFamily="@font/roboto"
-                                    android:textColor="@color/colorBlack"
-                                    android:textStyle="bold"
-                                    android:textSize="15sp"
-                                    android:gravity="center"/>
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
 
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
+                            android:background="@drawable/rounded_menu"
+                            android:layout_weight="1"
+                            android:id="@+id/linearCheckLaporanPelaksana"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            card_view:cardElevation="4dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginBottom="4dp"
-                            card_view:cardCornerRadius="4dp">
-                            <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp">
+                            <ImageView
                                 android:layout_weight="1"
-                                android:id="@+id/linearLaporan"
+                                android:src="@drawable/report"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            </ImageView>
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <com.airbnb.lottie.LottieAnimationView
-                                    android:layout_weight="1"
-                                    app:lottie_loop="true"
-                                    app:lottie_fileName="report.json"
-                                    app:lottie_autoPlay="true"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-                                </com.airbnb.lottie.LottieAnimationView>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="3"
-                                    android:text="Check Laporan"
-                                    android:fontFamily="@font/roboto"
-                                    android:textColor="@color/colorBlack"
-                                    android:textStyle="bold"
-                                    android:textSize="15sp"
-                                    android:gravity="center"/>
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
+                                android:layout_weight="3"
+                                android:text="Check Laporan"
+                                android:fontFamily="@font/roboto"
+                                android:textColor="@color/colorBlack"
+                                android:textStyle="bold"
+                                android:textSize="15sp"
+                                android:gravity="center"/>
+                        </LinearLayout>
                     </LinearLayout>
 
 
