@@ -2,7 +2,9 @@ package com.destinyapp.jempolok.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
 import com.destinyapp.jempolok.Activity.CheckLaporanActivity;
+import com.destinyapp.jempolok.Activity.MainActivity;
 import com.destinyapp.jempolok.Model.DataModel;
 import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.Model.ResponseModel;
@@ -41,12 +44,14 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
     boolean seen = false;
     String user,password,token,nama,foto,level,status;
     DB_Helper dbHelper;
+    String idTeknisi;
     Dialog myDialog;
     RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
     private List<DataModel> mItems = new ArrayList<>();
     Button Submit;
+    ArrayList<String> IDTeknisi = new ArrayList<String>();
     public AdapterReport(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
@@ -73,6 +78,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
         }
         dbHelper = new DB_Helper(ctx);
         Cursor cursor = dbHelper.checkUser();
+        final String idReport= dm.getId_report();
         if (cursor.getCount()>0){
             while (cursor.moveToNext()){
                 user = cursor.getString(0);
@@ -84,11 +90,11 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
                 status = cursor.getString(6);
             }
         }
-        if (!level.equals("pelaksana")){
+        if (level.equals("pelaksana")){
             holderData.LayoutCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Logic();
+                    Logic(idReport);
                 }
             });
         }
@@ -124,7 +130,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             Status = v.findViewById(R.id.tvStatus);
         }
     }
-    private void Logic(){
+    private void Logic(final String idReport){
         myDialog.show();
         Submit = myDialog.findViewById(R.id.btnSubmit);
         recyclerView = myDialog.findViewById(R.id.recycler);
@@ -142,7 +148,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
                     mAdapter.notifyDataSetChanged();
                 }else if(response.body().getStatusCode().equals("002")){
                     method.Login(ctx,user,password);
-                    Logic();
+                    Logic(idReport);
                 }else{
                     Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -151,6 +157,43 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor cursor = dbHelper.checkTeknisi();
+                if (cursor.getCount()>0){
+                    while (cursor.moveToNext()){
+                        idTeknisi = cursor.getString(0);
+                        IDTeknisi.add(idTeknisi);
+                    }
+                }
+                dbHelper.resetTeknisi();
+
+                ApiRequest api2 = RetroServer.getClient().create(ApiRequest.class);
+                Call<ResponseModel> Data2 = api2.AsignTechnician(method.AUTH(token),idReport,"1",IDTeknisi);
+                Data2.enqueue(new Callback<ResponseModel>() {
+                    @Override
+                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                        if (response.body().getStatusCode().equals("000")){
+                            Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        }else if(response.body().getStatusCode().equals("002")){
+                            method.Login(ctx,user,password);
+                            Logic(idReport);
+                        }else{
+                            Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                        Intent intent = new Intent(ctx, CheckLaporanActivity.class);
+                        ctx.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseModel> call, Throwable t) {
+                        Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
     }

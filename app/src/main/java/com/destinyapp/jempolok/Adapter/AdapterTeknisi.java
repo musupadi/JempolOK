@@ -3,6 +3,7 @@ package com.destinyapp.jempolok.Adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.media.session.PlaybackState;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.destinyapp.jempolok.Model.DataModel;
 import com.destinyapp.jempolok.R;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterTeknisi extends RecyclerView.Adapter<AdapterTeknisi.HolderData> {
@@ -29,7 +31,7 @@ public class AdapterTeknisi extends RecyclerView.Adapter<AdapterTeknisi.HolderDa
     String user,password,token,nama,foto,level,status;
     String idTeknisi;
     DB_Helper dbHelper;
-    Boolean onClick=true;
+    Boolean onClick=false;
     public AdapterTeknisi (Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
@@ -54,11 +56,12 @@ public class AdapterTeknisi extends RecyclerView.Adapter<AdapterTeknisi.HolderDa
         if (cursor.getCount()>0){
             while (cursor.moveToNext()){
                 idTeknisi = cursor.getString(0);
+                if (idTeknisi.equals(dm.getId_teknisi())){
+                    onClick=true;
+                    holderData.LayoutCardView.setBackgroundColor(Color.RED);
+                }
             }
-        }
-        if (idTeknisi.equals(dm.getId_teknisi())){
-            onClick=true;
-            holderData.LayoutCardView.setBackgroundColor(Color.RED);
+
         }
         holderData.LayoutCardView.setOnClickListener(new View.OnClickListener() {
             @Override

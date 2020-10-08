@@ -155,7 +155,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:orientation="horizontal">
-
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:id="@+id/linearLaporanKerusakanPelaksana"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/rounded_menu">
+                            <ImageView
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/megaphone"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            </ImageView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:text="Laporan Kerusakan"
+                                android:fontFamily="@font/roboto"
+                                android:textColor="@color/colorBlack"
+                                android:textStyle="bold"
+                                android:textSize="15sp"
+                                android:gravity="center"/>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:background="@drawable/rounded_menu"

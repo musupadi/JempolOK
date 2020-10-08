@@ -34,7 +34,7 @@ import java.util.Date;
  */
 public class HomeFragment extends Fragment {
 
-    LinearLayout laporanKerusakan,checklaporan,checklaporanpelaksana;
+    LinearLayout laporanKerusakan,checklaporan,checklaporanpelaksana,kerusakanpelaksana;
     LinearLayout Pelaksana,Pengguna;
     String user,password,token,nama,foto,level,status;
     DB_Helper dbHelper;
@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment {
         tvHeader = view.findViewById(R.id.tvHeader);
         tvTgl = view.findViewById(R.id.tvTgl);
         checklaporanpelaksana = view.findViewById(R.id.linearCheckLaporanPelaksana);
+        kerusakanpelaksana = view.findViewById(R.id.linearLaporanKerusakanPelaksana);
         dbHelper = new DB_Helper(getActivity());
         Cursor cursor = dbHelper.checkUser();
         if (cursor.getCount()>0){
@@ -94,10 +95,10 @@ public class HomeFragment extends Fragment {
                 status = cursor.getString(6);
             }
         }
-        if (level.equals("pelaksana")){
+        if (level.equals("pengguna")){
             Pelaksana.setVisibility(View.GONE);
             Pengguna.setVisibility(View.VISIBLE);
-        }else if(level.equals("pengguna")){
+        }else if(level.equals("pelaksana")){
             Pengguna.setVisibility(View.GONE);
             Pelaksana.setVisibility(View.VISIBLE);
         }
@@ -129,6 +130,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
+                startActivity(intent);
+            }
+        });
+        kerusakanpelaksana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
                 startActivity(intent);
             }
         });

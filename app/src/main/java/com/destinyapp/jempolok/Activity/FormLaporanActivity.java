@@ -233,7 +233,7 @@ public class FormLaporanActivity extends AppCompatActivity {
         if (u==1){
             File file = new File(postBukti);
             RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
-            MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo", file.getName(), fileReqBody);
+            MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
             Call<ResponseModel> Data = api.Laporan(
                     musupadi.AUTH(token),
                     RequestBody.create(MediaType.parse("text/plain"),Laporan.getText().toString()),

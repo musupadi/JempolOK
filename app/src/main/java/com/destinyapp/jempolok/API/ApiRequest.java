@@ -2,6 +2,9 @@ package com.destinyapp.jempolok.API;
 
 import com.destinyapp.jempolok.Model.ResponseModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -76,6 +79,13 @@ public interface ApiRequest {
                                  @Part("kecamatanReport") RequestBody kecamatanReport,
                                  @Part("tanggalReport") RequestBody tanggalReport,
                                  @Part("alasanReject") RequestBody alasanReject);
+
+    @FormUrlEncoded
+    @POST("report_assign_technician")
+    Call<ResponseModel> AsignTechnician(@Header("Authorization") String authHeader,
+                                        @Field("idReport") String idReport,
+                                        @Field("statusReport") String statusReport,
+                                        @Field("idTeknisi[]") List<String> idTeknisi);
 
     @GET("report")
     Call<ResponseModel> Report(@Header("Authorization") String authHeader);
