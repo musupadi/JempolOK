@@ -85,10 +85,10 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
     public void deleteTeknisi(String id){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+TABLE_NAME_TEKNISI+" WHERE "+ID_TEKNISI+" = "+id);
+        db.execSQL("DELETE FROM "+TABLE_NAME_TEKNISI+" WHERE "+ID_TEKNISI+" = "+id+"");
     }
     public void Logout(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+TABLE_NAME_ACCOUNT);
+        db.execSQL("DELETE FROM "+TABLE_NAME_ACCOUNT+"");
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.destinyapp.jempolok.API.ApiRequest;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText user,password;
     Musupadi musupadi = new Musupadi();
     DB_Helper dbHelper = new DB_Helper(this);
+    LinearLayout available,loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.btnLogin);
         user = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
+        available = findViewById(R.id.linearAvailable);
+        loading = findViewById(R.id.linearLoading);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
         return Check;
     }
     private void Logic(){
+        available.setAlpha((float) 0.5);
+        loading.setVisibility(View.VISIBLE);
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> login =api.login(user.getText().toString(),password.getText().toString());
         login.enqueue(new Callback<ResponseModel>() {
@@ -68,15 +74,20 @@ public class LoginActivity extends AppCompatActivity {
                     }else{
                         Toast.makeText(LoginActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
+                    available.setAlpha((float) 1.0);
+                    loading.setVisibility(View.GONE);
                 }catch (Exception e){
                     Toast.makeText(LoginActivity.this, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                    available.setAlpha((float) 1.0);
+                    loading.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
 //                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-                Toast.makeText(LoginActivity.this, "Username Atau Password Salah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.GONE);
             }
         });
     }

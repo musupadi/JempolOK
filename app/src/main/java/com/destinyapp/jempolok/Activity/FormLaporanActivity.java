@@ -126,6 +126,7 @@ public class FormLaporanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 LinearUpload2.setVisibility(View.VISIBLE);
                 u=2;
+                Tambah.setVisibility(View.GONE);
             }
         });
         Tambah2.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +134,7 @@ public class FormLaporanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 LinearUpload3.setVisibility(View.VISIBLE);
                 u=3;
+                Tambah2.setVisibility(View.GONE);
             }
         });
         Tambah3.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +142,7 @@ public class FormLaporanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 LinearUpload4.setVisibility(View.VISIBLE);
                 u=4;
+                Tambah3.setVisibility(View.GONE);
             }
         });
         upload2.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +256,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
@@ -302,7 +305,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
@@ -357,7 +360,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
@@ -417,7 +420,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);

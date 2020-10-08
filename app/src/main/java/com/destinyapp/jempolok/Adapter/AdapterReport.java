@@ -1,6 +1,7 @@
 package com.destinyapp.jempolok.Adapter;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -170,27 +171,37 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
                     }
                 }
                 dbHelper.resetTeknisi();
-
+                final ProgressDialog pd = new ProgressDialog(ctx);
+                pd.setMessage("Sedang Mengupdate data");
+                pd.setCancelable(false);
+                pd.show();
                 ApiRequest api2 = RetroServer.getClient().create(ApiRequest.class);
                 Call<ResponseModel> Data2 = api2.AsignTechnician(method.AUTH(token),idReport,"1",IDTeknisi);
                 Data2.enqueue(new Callback<ResponseModel>() {
                     @Override
                     public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                        if (response.body().getStatusCode().equals("000")){
-                            Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
-                        }else if(response.body().getStatusCode().equals("002")){
-                            method.Login(ctx,user,password);
-                            Logic(idReport);
-                        }else{
-                            Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        try {
+                            if (response.body().getStatusCode().equals("000")){
+                                Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                            }else if(response.body().getStatusCode().equals("002")){
+                                method.Login(ctx,user,password);
+                                Logic(idReport);
+                            }else{
+                                Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                            Intent intent = new Intent(ctx, CheckLaporanActivity.class);
+                            ctx.startActivity(intent);
+                            pd.hide();
+                        }catch (Exception e){
+                            Toast.makeText(ctx, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                            pd.hide();
                         }
-                        Intent intent = new Intent(ctx, CheckLaporanActivity.class);
-                        ctx.startActivity(intent);
                     }
 
                     @Override
                     public void onFailure(Call<ResponseModel> call, Throwable t) {
                         Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                        pd.hide();
                     }
                 });
 
