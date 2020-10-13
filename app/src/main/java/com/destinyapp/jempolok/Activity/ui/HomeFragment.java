@@ -123,6 +123,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
+                dbHelper.reseKategori();
+                dbHelper.resetKegiatan();
                 startActivity(intent);
             }
         });
@@ -137,6 +139,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
+                dbHelper.reseKategori();
+                dbHelper.resetKegiatan();
                 startActivity(intent);
             }
         });

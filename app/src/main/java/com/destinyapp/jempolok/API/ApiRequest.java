@@ -15,6 +15,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface ApiRequest {
     @FormUrlEncoded
@@ -33,7 +34,9 @@ public interface ApiRequest {
                                     @Part("detailLokasi") RequestBody detailLokasi,
                                     @Part("kecamatanReport") RequestBody kecamatanReport,
                                     @Part("tanggalReport") RequestBody tanggalReport,
-                                    @Part("alasanReject") RequestBody alasanReject);
+                                    @Part("alasanReject") RequestBody alasanReject,
+                                    @Query("kegiatan[]") ArrayList<String> kegiatan,
+                                    @Query("kategori[]") ArrayList<String> kategori);
 
     @Multipart
     @POST("report")
@@ -47,7 +50,9 @@ public interface ApiRequest {
                                  @Part("detailLokasi") RequestBody detailLokasi,
                                  @Part("kecamatanReport") RequestBody kecamatanReport,
                                  @Part("tanggalReport") RequestBody tanggalReport,
-                                 @Part("alasanReject") RequestBody alasanReject);
+                                 @Part("alasanReject") RequestBody alasanReject,
+                                 @Query("kegiatan[]") ArrayList<String> kegiatan,
+                                 @Query("kategori[]") ArrayList<String> kategori);
 
     @Multipart
     @POST("report")
@@ -62,7 +67,9 @@ public interface ApiRequest {
                                  @Part("detailLokasi") RequestBody detailLokasi,
                                  @Part("kecamatanReport") RequestBody kecamatanReport,
                                  @Part("tanggalReport") RequestBody tanggalReport,
-                                 @Part("alasanReject") RequestBody alasanReject);
+                                 @Part("alasanReject") RequestBody alasanReject,
+                                 @Query("kegiatan[]") ArrayList<String> kegiatan,
+                                 @Query("kategori[]") ArrayList<String> kategori);
 
     @Multipart
     @POST("report")
@@ -78,7 +85,9 @@ public interface ApiRequest {
                                  @Part("detailLokasi") RequestBody detailLokasi,
                                  @Part("kecamatanReport") RequestBody kecamatanReport,
                                  @Part("tanggalReport") RequestBody tanggalReport,
-                                 @Part("alasanReject") RequestBody alasanReject);
+                                 @Part("alasanReject") RequestBody alasanReject,
+                                 @Query("kegiatan[]") ArrayList<String> kegiatan,
+                                 @Query("kategori[]") ArrayList<String> kategori);
 
     @FormUrlEncoded
     @POST("report_assign_technician")
@@ -87,12 +96,23 @@ public interface ApiRequest {
                                         @Field("statusReport") String statusReport,
                                         @Field("idTeknisi[]") List<String> idTeknisi);
 
+    @FormUrlEncoded
+    @POST("report_assign")
+    Call<ResponseModel> Asign(@Header("Authorization") String authHeader,
+                                        @Field("idReport") String idReport,
+                                        @Field("statusReport") String statusReport);
+
     @GET("report")
     Call<ResponseModel> Report(@Header("Authorization") String authHeader);
 
     @GET("teknisi")
     Call<ResponseModel> Teknisi(@Header("Authorization") String authHeader);
 
+    @GET("kategori")
+    Call<ResponseModel> Kategori(@Header("Authorization") String authHeader);
+
+    @GET("kegiatan")
+    Call<ResponseModel> Kegiatan(@Header("Authorization") String authHeader);
 
     @GET("kecamatan")
     Call<ResponseModel> Kecamatan(@Header("Authorization") String authHeader);

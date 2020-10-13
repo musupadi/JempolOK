@@ -77,18 +77,6 @@ public class AdapterTeknisi extends RecyclerView.Adapter<AdapterTeknisi.HolderDa
                 }
             }
         });
-//        holderData.Selengkapnya.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent goInput = new Intent(ctx, DetailBlogActivity.class);
-//                goInput.putExtra("GAMBAR",dm.getImage());
-//                goInput.putExtra("POST",dm.getDate());
-//                goInput.putExtra("AUTHOR",dm.getAuthor());
-//                goInput.putExtra("TITTLE",dm.getTitle());
-//                goInput.putExtra("DESKRIPSI",dm.getDescription());
-//                ctx.startActivities(new Intent[]{goInput});
-//            }
-//        });
     }
 
     @Override

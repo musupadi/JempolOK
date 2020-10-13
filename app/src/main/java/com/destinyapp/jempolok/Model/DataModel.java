@@ -127,6 +127,32 @@ public class DataModel {
     @Expose
     public String status_teknisi;
 
+    //Kategori
+    @SerializedName("id_kategori")
+    @Expose
+    public int id_kategori;
+
+    @SerializedName("nama_kategori")
+    @Expose
+    public String nama_kategori;
+
+    @SerializedName("tgl_input")
+    @Expose
+    public String tgl_input;
+
+    //Kegiatan
+    @SerializedName("id_kegiatan")
+    @Expose
+    public int id_kegiatan;
+
+    @SerializedName("nama_kegiatan")
+    @Expose
+    public String nama_kegiatan;
+
+    @SerializedName("tgl_input_kegiatan")
+    @Expose
+    public String tgl_input_kegiatan;
+
     public String getAccessToken() {
         return accessToken;
     }
@@ -365,5 +391,53 @@ public class DataModel {
 
     public void setStatus_teknisi(String status_teknisi) {
         this.status_teknisi = status_teknisi;
+    }
+
+    public int getId_kategori() {
+        return id_kategori;
+    }
+
+    public void setId_kategori(int id_kategori) {
+        this.id_kategori = id_kategori;
+    }
+
+    public String getNama_kategori() {
+        return nama_kategori;
+    }
+
+    public void setNama_kategori(String nama_kategori) {
+        this.nama_kategori = nama_kategori;
+    }
+
+    public String getTgl_input() {
+        return tgl_input;
+    }
+
+    public void setTgl_input(String tgl_input) {
+        this.tgl_input = tgl_input;
+    }
+
+    public int getId_kegiatan() {
+        return id_kegiatan;
+    }
+
+    public void setId_kegiatan(int id_kegiatan) {
+        this.id_kegiatan = id_kegiatan;
+    }
+
+    public String getNama_kegiatan() {
+        return nama_kegiatan;
+    }
+
+    public void setNama_kegiatan(String nama_kegiatan) {
+        this.nama_kegiatan = nama_kegiatan;
+    }
+
+    public String getTgl_input_kegiatan() {
+        return tgl_input_kegiatan;
+    }
+
+    public void setTgl_input_kegiatan(String tgl_input_kegiatan) {
+        this.tgl_input_kegiatan = tgl_input_kegiatan;
     }
 }

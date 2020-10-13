@@ -95,7 +95,31 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             holderData.LayoutCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Logic(idReport);
+                    if (dm.getStatus_report().equals("progress 1")){
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> Data = api.Asign(method.AUTH(token),dm.getId_report(),"2");
+                        Data.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                if (response.body().getStatusCode().equals("000")){
+                                    Intent intent = new Intent(ctx,MainActivity.class);
+                                    ctx.startActivity(intent);
+                                }else if(response.body().getStatusCode().equals("002")){
+                                    method.Login(ctx,user,password);
+                                    Logic(idReport);
+                                }else{
+                                    Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        Logic(idReport);
+                    }
                 }
             });
         }

@@ -3,6 +3,9 @@ package com.destinyapp.jempolok.Activity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -15,6 +18,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +30,12 @@ import android.widget.Toast;
 
 import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
+import com.destinyapp.jempolok.Adapter.AdapterKategori;
+import com.destinyapp.jempolok.Adapter.AdapterKegiatan;
+import com.destinyapp.jempolok.Adapter.Spinner.AdapterSpinnerKategori;
+import com.destinyapp.jempolok.Adapter.Spinner.AdapterSpinnerKegiatan;
+import com.destinyapp.jempolok.Model.DataModel;
+import com.destinyapp.jempolok.Model.Model;
 import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.Model.ResponseModel;
 import com.destinyapp.jempolok.R;
@@ -35,7 +45,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -81,18 +93,35 @@ public class FormLaporanActivity extends AppCompatActivity {
     ImageView gambar,gambar2,gambar3,gambar4;
     TextView tvGambar,tvGambar2,tvGambar3,tvGambar4;
     EditText Laporan,Deskripsi,Kegiatan,Alasan,DetailLokasi;
-    Spinner Kecamatan,Lokasi;
-    TextView Kec;
+    Spinner Kecamatan,Lokasi,spKategori,spKegiatan;
+    TextView Kec,Kat,Keg,kat,keg;
     String user,password,token,nama,foto,level,status;
     DB_Helper dbHelper;
     RelativeLayout back;
     CardView LinearUpload2,LinearUpload3,LinearUpload4;
-    Button Tambah,Tambah2,Tambah3;
+    Button Tambah,Tambah2,Tambah3,TambahKategori,TambahKegiatan;
     int u = 1;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mManager;
+    private List<DataModel> mItems = new ArrayList<>();
+    private List<DataModel> mItems2 = new ArrayList<>();
+    ArrayList<String> IDKategori = new ArrayList<String>();
+    ArrayList<String> IDKegiatan = new ArrayList<String>();
+    Musupadi musupadi;
+    RecyclerView recyclerKategori,recyclerKegiatan;
+    private AdapterSpinnerKategori aKategori;
+    private AdapterSpinnerKegiatan aKegiatan;
+    String idKategori,idKegiatan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_laporan);
+        spKategori = findViewById(R.id.spKategori);
+        spKegiatan = findViewById(R.id.spKegiatan);
+        TambahKategori = findViewById(R.id.btnTambahKategori);
+        TambahKegiatan = findViewById(R.id.btnTambahKegiatan);
+        recyclerKategori = findViewById(R.id.recyclerKategori);
+        recyclerKegiatan = findViewById(R.id.recyclerKegiatan);
         back = findViewById(R.id.relativeBack);
         upload = findViewById(R.id.btnUpload);
         upload2 = findViewById(R.id.btnUpload2);
@@ -114,6 +143,10 @@ public class FormLaporanActivity extends AppCompatActivity {
         DetailLokasi = findViewById(R.id.etDetailLokasi);
         Kecamatan = findViewById(R.id.spKecamataan);
         Kec = findViewById(R.id.tvIdKecamatan);
+        Kat = findViewById(R.id.tvIdKategori);
+        Keg = findViewById(R.id.tvIdKegiatan);
+        kat = findViewById(R.id.tvNamaKategori);
+        keg = findViewById(R.id.tvNamaKegiatan);
         Lokasi = findViewById(R.id.spLokasi);
         Tambah = findViewById(R.id.btnTambah);
         Tambah2 = findViewById(R.id.btnTambah2);
@@ -121,6 +154,55 @@ public class FormLaporanActivity extends AppCompatActivity {
         LinearUpload2 = findViewById(R.id.linearUpload2);
         LinearUpload3 = findViewById(R.id.linearUpload3);
         LinearUpload4 = findViewById(R.id.linearUpload4);
+        getKegiatan();
+        aKegiatan = new AdapterSpinnerKegiatan(FormLaporanActivity.this,mItems);
+        spKegiatan.setAdapter(aKegiatan);
+        spKegiatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                DataModel clickedItem = (DataModel) parent.getItemAtPosition(position);
+                int clickedItems = clickedItem.getId_kegiatan();
+                Keg.setText(String.valueOf(clickedItems));
+                keg.setText(clickedItem.getNama_kegiatan());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        getKategori();
+        aKategori = new AdapterSpinnerKategori(FormLaporanActivity.this,mItems);
+        spKategori.setAdapter(aKategori);
+        spKategori.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                DataModel clickedItem = (DataModel) parent.getItemAtPosition(position);
+                int clickedItems = clickedItem.getId_kategori();
+                Kat.setText(String.valueOf(clickedItems));
+                kat.setText(clickedItem.getNama_kategori());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        TambahKategori.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.saveIDKategori(Kat.getText().toString(),kat.getText().toString());
+                ListKategori();
+            }
+        });
+        TambahKegiatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.saveIDKegiatan(Keg.getText().toString(),keg.getText().toString());
+                ListKegiatan();
+            }
+        });
         Tambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,8 +303,42 @@ public class FormLaporanActivity extends AppCompatActivity {
         }else if(postBukti==""){
             Toast.makeText(this, "Masukan Gambar", Toast.LENGTH_SHORT).show();
         }else{
-            Logic();
+            Cursor cursor = dbHelper.checkKategori();
+            if (cursor.getCount()>0){
+                while (cursor.moveToNext()){
+                    IDKategori.add(cursor.getString(0));
+                }
+            }
+            cursor = dbHelper.checkKegiatan();
+            if (cursor.getCount()>0){
+                while (cursor.moveToNext()){
+                    IDKegiatan.add(cursor.getString(0));
+                }
+            }
+            if (IDKegiatan.size() < 1){
+                Toast.makeText(this, "Harap pilih Kegiatan", Toast.LENGTH_SHORT).show();
+            }else if(IDKategori.size() <1){
+                Toast.makeText(this, "Harap pilih Kategori", Toast.LENGTH_SHORT).show();
+            }else{
+                Logic();
+            }
         }
+    }
+    private void ListKategori(){
+        recyclerKategori.setHasFixedSize(true);
+//        recyclerKategori.setLayoutManager(new LinearLayoutManager(FormLaporanActivity.this));
+        recyclerKategori.setLayoutManager(new GridLayoutManager(FormLaporanActivity.this, 3));
+        dbHelper = new DB_Helper(FormLaporanActivity.this);
+        AdapterKategori Adapter = new AdapterKategori(FormLaporanActivity.this,dbHelper.kategoriList(),recyclerKategori);
+        recyclerKategori.setAdapter(Adapter);
+    }
+    private void ListKegiatan(){
+        recyclerKegiatan.setHasFixedSize(true);
+//        recyclerKategori.setLayoutManager(new LinearLayoutManager(FormLaporanActivity.this));
+        recyclerKegiatan.setLayoutManager(new GridLayoutManager(FormLaporanActivity.this, 3));
+        dbHelper = new DB_Helper(FormLaporanActivity.this);
+        AdapterKegiatan Adapter = new AdapterKegiatan(FormLaporanActivity.this,dbHelper.kegiatanList(),recyclerKategori);
+        recyclerKegiatan.setAdapter(Adapter);
     }
     private void Logic(){
         final ProgressDialog pd = new ProgressDialog(FormLaporanActivity.this);
@@ -247,7 +363,9 @@ public class FormLaporanActivity extends AppCompatActivity {
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
-                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString())
+                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
+                    IDKegiatan,
+                    IDKategori
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
@@ -258,7 +376,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                             pd.hide();
                             Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
                             startActivity(intent);
-                        }else if(response.body().getStatusCode().equals("002")){
+                        }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
                             Login(pd);
                         }else{
                             Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
@@ -296,7 +414,9 @@ public class FormLaporanActivity extends AppCompatActivity {
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
-                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString())
+                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
+                    IDKegiatan,
+                    IDKategori
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
@@ -351,7 +471,9 @@ public class FormLaporanActivity extends AppCompatActivity {
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
-                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString())
+                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
+                    IDKegiatan,
+                    IDKategori
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
@@ -411,7 +533,9 @@ public class FormLaporanActivity extends AppCompatActivity {
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
-                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString())
+                    RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
+                    IDKegiatan,
+                    IDKategori
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
@@ -443,6 +567,64 @@ public class FormLaporanActivity extends AppCompatActivity {
             });
         }
 //        Call<ResponseModel> Upload = api.UploadBukti()
+    }
+    private void getKategori(){
+        musupadi = new Musupadi();
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> getProvinsi = api.Kategori(musupadi.AUTH(token));
+        getProvinsi.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        AdapterSpinnerKategori adapter = new AdapterSpinnerKategori(FormLaporanActivity.this,mItems);
+                        spKategori.setAdapter(adapter);
+                    }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
+                        musupadi.Login(FormLaporanActivity.this,user,password);
+                        getKategori();
+                    }else{
+                        Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(FormLaporanActivity.this,"Koneksi Gagal",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void getKegiatan(){
+        musupadi = new Musupadi();
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> getProvinsi = api.Kegiatan(musupadi.AUTH(token));
+        getProvinsi.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        AdapterSpinnerKegiatan adapter = new AdapterSpinnerKegiatan(FormLaporanActivity.this,mItems);
+                        spKegiatan.setAdapter(adapter);
+                    }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
+                        musupadi.Login(FormLaporanActivity.this,user,password);
+                        getKegiatan();
+                    }else{
+                        Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(FormLaporanActivity.this,"Koneksi Gagal",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void Login(final ProgressDialog pd){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
