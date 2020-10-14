@@ -1,8 +1,10 @@
 package com.destinyapp.jempolok.Adapter;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -95,28 +97,47 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             holderData.LayoutCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (dm.getStatus_report().equals("progress 1")){
-                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-                        Call<ResponseModel> Data = api.Asign(method.AUTH(token),dm.getId_report(),"2");
-                        Data.enqueue(new Callback<ResponseModel>() {
-                            @Override
-                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                                if (response.body().getStatusCode().equals("000")){
-                                    Intent intent = new Intent(ctx,MainActivity.class);
-                                    ctx.startActivity(intent);
-                                }else if(response.body().getStatusCode().equals("002")){
-                                    method.Login(ctx,user,password);
-                                    Logic(idReport);
-                                }else{
-                                    Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
+                    if (dm.getStatus_report().equals("progress 2")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+                        builder.setMessage("Laporan Selesai ?")
+                                .setCancelable(false)
+                                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                                        Call<ResponseModel> Data = api.Asign(method.AUTH(token),dm.getId_report(),"2");
+                                        Data.enqueue(new Callback<ResponseModel>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                                if (response.body().getStatusCode().equals("000")){
+                                                    Intent intent = new Intent(ctx,MainActivity.class);
+                                                    ctx.startActivity(intent);
+                                                }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
+                                                    method.Login(ctx,user,password);
+                                                    Logic(idReport);
+                                                }else{
+                                                    Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                                Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                            @Override
+                                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                                Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                })
+                                .setNegativeButton("Belum", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                                //Set your icon here
+                                .setTitle("Perhatian !!!")
+                                .setIcon(R.drawable.ic_baseline_close_24_red);
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }else if (dm.getStatus_report().equals("progress 3")){
+                        Toast.makeText(ctx, "Laporan Sudah Selesai", Toast.LENGTH_SHORT).show();
                     }else{
                         Logic(idReport);
                     }
@@ -129,7 +150,20 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
         holderData.Lokasi.setText(dm.getLokasi());
         holderData.Kecamatan.setText(dm.getKecamatan_report());
         holderData.DetailLokasi.setText(dm.getDetail_lokasi());
-        holderData.Status.setText(dm.getStatus_report());
+        if (dm.getStatus_report().equals("progress 1")){
+            holderData.Status.setText("Pending");
+            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_red);
+        }else if(dm.getStatus_report().equals("progress 2")){
+            holderData.Status.setText("On Progress");
+            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_yellow);
+        }else if(dm.getStatus_report().equals("progress 3")){
+            holderData.Status.setText("Selesai");
+            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_green);
+        }else{
+            holderData.Status.setText("Pending");
+            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_red);
+        }
+//        holderData.Status.setText(dm.getStatus_report());
         holderData.dm=dm;
     }
 

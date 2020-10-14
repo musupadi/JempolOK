@@ -90,7 +90,7 @@ public interface ApiRequest {
                                  @Query("kategori[]") ArrayList<String> kategori);
 
     @FormUrlEncoded
-    @POST("report_assign_technician")
+    @POST("report_assign")
     Call<ResponseModel> AsignTechnician(@Header("Authorization") String authHeader,
                                         @Field("idReport") String idReport,
                                         @Field("statusReport") String statusReport,

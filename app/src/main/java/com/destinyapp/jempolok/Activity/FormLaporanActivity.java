@@ -285,10 +285,20 @@ public class FormLaporanActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent = new Intent(FormLaporanActivity.this,HomeActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(FormLaporanActivity.this,HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void Checker(){
         if (Laporan.getText().toString().isEmpty()){
             Toast.makeText(this, "Masukan Laporan", Toast.LENGTH_SHORT).show();
@@ -378,6 +388,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
                             Login(pd);
+                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                             pd.hide();
@@ -429,6 +440,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
+                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                             pd.hide();
@@ -486,6 +498,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
+                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                             pd.hide();
@@ -548,6 +561,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
+                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                             pd.hide();

@@ -76,9 +76,18 @@ public class CheckLaporanActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent = new Intent(CheckLaporanActivity.this,HomeActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CheckLaporanActivity.this,HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void Logic(){
@@ -101,7 +110,7 @@ public class CheckLaporanActivity extends AppCompatActivity {
                         recyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
                         loading.setVisibility(View.GONE);
-                    }else if(response.body().getStatusCode().equals("002")){
+                    }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
                         musupadi.Login(CheckLaporanActivity.this,user,password);
                         Logic();
                     }else{
