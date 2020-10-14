@@ -54,7 +54,7 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Laporan Selesai ?")
+                builder.setMessage("Yakin Ingin Logout ?")
                         .setCancelable(false)
                         .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -64,7 +64,7 @@ public class SettingFragment extends Fragment {
                                 startActivity(intent);
                             }
                         })
-                        .setNegativeButton("Belum", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
