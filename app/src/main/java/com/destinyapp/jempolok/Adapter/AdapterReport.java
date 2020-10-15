@@ -11,6 +11,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,6 +73,8 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
     @Override
     public void onBindViewHolder(@NonNull final AdapterReport.HolderData holderData, int posistion) {
         final DataModel dm = mList.get(posistion);
+        Animation animation = AnimationUtils.loadAnimation(ctx,R.anim.fadein);
+        holderData.LayoutCardView.startAnimation(animation);
         method=new Musupadi();
         myDialog = new Dialog(ctx);
         myDialog.setContentView(R.layout.dialog_teknisi);
@@ -151,17 +155,37 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
         holderData.Kecamatan.setText(dm.getKecamatan_report());
         holderData.DetailLokasi.setText(dm.getDetail_lokasi());
         if (dm.getStatus_report().equals("progress 1")){
-            holderData.Status.setText("Pending");
-            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_red);
+            holderData.Status.setText("On Progress - 1");
+            holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_yellow);
+            holderData.tvStatus.setVisibility(View.VISIBLE);
+            holderData.ivStatus.setVisibility(View.GONE);
         }else if(dm.getStatus_report().equals("progress 2")){
-            holderData.Status.setText("On Progress");
-            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_yellow);
+            holderData.Status.setText("On Progress - 2");
+            holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_yellow);
+            holderData.tvStatus.setVisibility(View.GONE);
+            holderData.ivStatus.setVisibility(View.GONE);
         }else if(dm.getStatus_report().equals("progress 3")){
-            holderData.Status.setText("Selesai");
-            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_green);
-        }else{
+            holderData.Status.setText("On Progress - 3");
+            holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_yellow);
+            holderData.tvStatus.setVisibility(View.GONE);
+            holderData.ivStatus.setVisibility(View.VISIBLE);
+        }else if(dm.getStatus_report().equals("pending")){
             holderData.Status.setText("Pending");
-            holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_red);
+            holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_red);
+            holderData.tvStatus.setVisibility(View.GONE);
+            holderData.ivStatus.setVisibility(View.GONE);
+        }else if(dm.getStatus_report().equals("rejected")){
+            holderData.Status.setText("Reject");
+            holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_black);
+            holderData.tvStatus.setVisibility(View.GONE);
+            holderData.ivStatus.setVisibility(View.GONE);
+        }else if(dm.getStatus_report().equals("selesai")){
+            holderData.Status.setText("Selesai");
+            holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_green);
+            holderData.tvStatus.setVisibility(View.GONE);
+            holderData.ivStatus.setVisibility(View.GONE);
+        }else{
+            holderData.Status.setText("Selesai");
         }
 //        holderData.Status.setText(dm.getStatus_report());
         holderData.dm=dm;
@@ -173,9 +197,10 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
     }
 
     class HolderData extends RecyclerView.ViewHolder{
-        TextView Tanggal,Laporan,DetailLaporan,Kegiatan,Lokasi,Kecamatan,DetailLokasi,Status;
+        TextView Tanggal,Laporan,DetailLaporan,Kegiatan,Lokasi,Kecamatan,DetailLokasi,Status,tvStatus;
         DataModel dm;
-        LinearLayout LayoutCardView;
+        ImageView ivStatus;
+        LinearLayout LayoutCardView,LinearBGStatus;
         HolderData(View v){
             super(v);
             LayoutCardView = v.findViewById(R.id.LayoutCardView);
@@ -187,6 +212,9 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             Kecamatan = v.findViewById(R.id.tvKecamatan);
             DetailLokasi = v.findViewById(R.id.tvDetailLokasi);
             Status = v.findViewById(R.id.tvStatus);
+            tvStatus = v.findViewById(R.id.tvinnerText);
+            ivStatus = v.findViewById(R.id.ivInnerText);
+            LinearBGStatus = v.findViewById(R.id.linearBGStatus);
         }
     }
     private void Logic(final String idReport){

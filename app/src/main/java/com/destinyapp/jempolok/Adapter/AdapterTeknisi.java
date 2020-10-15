@@ -7,6 +7,8 @@ import android.media.session.PlaybackState;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,6 +50,8 @@ public class AdapterTeknisi extends RecyclerView.Adapter<AdapterTeknisi.HolderDa
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         final DataModel dm = mList.get(posistion);
+        Animation animation = AnimationUtils.loadAnimation(ctx,R.anim.fadein);
+        holderData.LayoutCardView.startAnimation(animation);
         holderData.Nama.setText(dm.getNama_teknisi());
         holderData.Status.setText(dm.getStatus_teknisi());
         holderData.Deskripsi.setText(dm.getDeskripsi_teknisi());
