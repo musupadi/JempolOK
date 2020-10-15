@@ -235,28 +235,82 @@ public class FormLaporanActivity extends AppCompatActivity {
         upload2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gambar2 = true;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                new MaterialDialog.Builder(FormLaporanActivity.this)
+                        .title("Pilih Gambar")
+                        .items(R.array.uploadImages)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        Gambar2 = true;
+                                        break;
+                                    case 1:
+                                        captureImage();
+                                        Gambar2 = true;
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         upload3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gambar3 = true;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                new MaterialDialog.Builder(FormLaporanActivity.this)
+                        .title("Pilih Gambar")
+                        .items(R.array.uploadImages)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        Gambar3 = true;
+                                        break;
+                                    case 1:
+                                        captureImage();
+                                        Gambar3 = true;
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         upload4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gambar4 = true;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                new MaterialDialog.Builder(FormLaporanActivity.this)
+                        .title("Pilih Gambar")
+                        .items(R.array.uploadImages)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        Gambar4 = true;
+                                        break;
+                                    case 1:
+                                        captureImage();
+                                        Gambar4 = true;
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         dbHelper = new DB_Helper(FormLaporanActivity.this);
@@ -284,24 +338,19 @@ public class FormLaporanActivity extends AppCompatActivity {
                             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                                 switch (which) {
                                     case 0:
-                                        Gambar = true;
                                         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                                                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                         startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        Gambar = true;
                                         break;
                                     case 1:
                                         captureImage();
+                                        Gambar = true;
                                         break;
-//                                    case 2:
-//                                        imageView.setImageResource(R.drawable.ic_launcher_background);
-//                                        break;
                                 }
                             }
                         })
                         .show();
-
-
-
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -861,18 +910,59 @@ public class FormLaporanActivity extends AppCompatActivity {
                 }
             }
         }else if (requestCode == CAMERA_PIC_REQUEST){
-            if (Build.VERSION.SDK_INT > 21) {
-                Glide.with(this).load(mImageFileLocation).into(gambar);
-                postBukti = mImageFileLocation;
-            }else{
-                Glide.with(this).load(fileUri).into(gambar);
-                postBukti = fileUri.getPath();
+            if (Gambar){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar);
+                    postBukti = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar);
+                    postBukti = fileUri.getPath();
+                }
+                String filename=postBukti.substring(postBukti.lastIndexOf("/")+1);
+                gambar.setVisibility(View.VISIBLE);
+                tvGambar.setVisibility(View.VISIBLE);
+                tvGambar.setText(filename);
+                Gambar=false;
+            }else if(Gambar2){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar2);
+                    postBukti2 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar2);
+                    postBukti2 = fileUri.getPath();
+                }
+                String filename=postBukti2.substring(postBukti2.lastIndexOf("/")+1);
+                gambar2.setVisibility(View.VISIBLE);
+                tvGambar2.setVisibility(View.VISIBLE);
+                tvGambar2.setText(filename);
+                Gambar2=false;
+            }else if(Gambar3){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar3);
+                    postBukti3 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar3);
+                    postBukti3 = fileUri.getPath();
+                }
+                String filename=postBukti3.substring(postBukti3.lastIndexOf("/")+1);
+                gambar3.setVisibility(View.VISIBLE);
+                tvGambar3.setVisibility(View.VISIBLE);
+                tvGambar3.setText(filename);
+                Gambar3=false;
+            }else if(Gambar4){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar4);
+                    postBukti4 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar4);
+                    postBukti4 = fileUri.getPath();
+                }
+                String filename=postBukti4.substring(postBukti4.lastIndexOf("/")+1);
+                gambar4.setVisibility(View.VISIBLE);
+                tvGambar4.setVisibility(View.VISIBLE);
+                tvGambar4.setText(filename);
+                Gambar4=false;
             }
-            String filename=postBukti.substring(postBukti.lastIndexOf("/")+1);
-            gambar.setVisibility(View.VISIBLE);
-            tvGambar.setVisibility(View.VISIBLE);
-            tvGambar.setText(filename);
-            Gambar=false;
         }
     }
 }
