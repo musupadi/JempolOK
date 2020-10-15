@@ -8,16 +8,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.destinyapp.jempolok.Activity.CheckLaporanActivity;
 import com.destinyapp.jempolok.Activity.FormLaporanActivity;
+import com.destinyapp.jempolok.Activity.LoginActivity;
 import com.destinyapp.jempolok.Activity.MainActivity;
+import com.destinyapp.jempolok.Activity.SplashScreenActivity;
 import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.R;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
@@ -119,36 +124,54 @@ public class HomeFragment extends Fragment {
         }
         Musupadi musupadi = new Musupadi();
         tvTgl.setText(musupadi.getToday()+", "+musupadi.thisDay());
+        final Animation animation = AnimationUtils.loadAnimation(getActivity(),R.anim.rotate);
+        final Handler handler = new Handler();
         laporanKerusakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
                 dbHelper.reseKategori();
                 dbHelper.resetKegiatan();
-                startActivity(intent);
+                laporanKerusakan.startAnimation(animation);
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
+                        startActivity(intent);
+                    }
+                }, 500);
             }
         });
         checklaporan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
-                startActivity(intent);
+                checklaporan.startAnimation(animation);
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
+                        startActivity(intent);
+                    }
+                }, 500);
             }
         });
         kerusakanpelaksana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
-                dbHelper.reseKategori();
-                dbHelper.resetKegiatan();
-                startActivity(intent);
+//                kerusakanpelaksana.startAnimation(animation);
+//                Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
+//                dbHelper.reseKategori();
+//                dbHelper.resetKegiatan();
+//                startActivity(intent);
             }
         });
         checklaporanpelaksana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
-                startActivity(intent);
+                checklaporanpelaksana.startAnimation(animation);
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
+                        startActivity(intent);
+                    }
+                }, 500);
             }
         });
     }

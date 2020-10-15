@@ -40,6 +40,38 @@
                     android:textColor="@color/colorBlack"
                     android:text="30 September 2020"
                     android:layout_weight="1"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_background_yellow"
+                        android:id="@+id/linearBGStatus"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tvinnerText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text=" ? "
+                            android:gravity="center"
+                            android:textColor="@color/colorWhite"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_baseline_check_24"
+                            android:layout_margin="10dp"
+                            android:id="@+id/ivInnerText">
+                        </ImageView>
+                    </LinearLayout>
+                </RelativeLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="10dp"
