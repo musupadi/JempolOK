@@ -3,6 +3,7 @@ package com.destinyapp.jempolok.Activity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,12 +30,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
 import com.destinyapp.jempolok.Adapter.AdapterKategori;
 import com.destinyapp.jempolok.Adapter.AdapterKegiatan;
 import com.destinyapp.jempolok.Adapter.Spinner.AdapterSpinnerKategori;
 import com.destinyapp.jempolok.Adapter.Spinner.AdapterSpinnerKegiatan;
+import com.destinyapp.jempolok.BuildConfig;
 import com.destinyapp.jempolok.Model.DataModel;
 import com.destinyapp.jempolok.Model.Model;
 import com.destinyapp.jempolok.Model.Musupadi;
@@ -270,10 +275,33 @@ public class FormLaporanActivity extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gambar = true;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                new MaterialDialog.Builder(FormLaporanActivity.this)
+                        .title("Pilih Gambar")
+                        .items(R.array.uploadImages)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Gambar = true;
+                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        break;
+                                    case 1:
+                                        captureImage();
+                                        break;
+//                                    case 2:
+//                                        imageView.setImageResource(R.drawable.ic_launcher_background);
+//                                        break;
+                                }
+                            }
+                        })
+                        .show();
+
+
+
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -670,6 +698,50 @@ public class FormLaporanActivity extends AppCompatActivity {
         });
     }
     //Dellaroy Logic
+    private void captureImage() {
+        if (Build.VERSION.SDK_INT > 21) { //use this if Lollipop_Mr1 (API 22) or above
+            Intent callCameraApplicationIntent = new Intent();
+            callCameraApplicationIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            // We give some instruction to the intent to save the image
+            File photoFile = null;
+
+            try {
+                // If the createImageFile will be successful, the photo file will have the address of the file
+                photoFile = createImageFile();
+                // Here we call the function that will try to catch the exception made by the throw function
+            } catch (IOException e) {
+                Logger.getAnonymousLogger().info("Exception error in generating the file");
+                e.printStackTrace();
+            }
+            // Here we add an extra file to the intent to put the address on to. For this purpose we use the FileProvider, declared in the AndroidManifest.
+            Uri outputUri = FileProvider.getUriForFile(
+                    this,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    photoFile);
+            callCameraApplicationIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+
+            // The following is a new line with a trying attempt
+            callCameraApplicationIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            Logger.getAnonymousLogger().info("Calling the camera App by intent");
+
+            // The following strings calls the camera app and wait for his file in return.
+            startActivityForResult(callCameraApplicationIntent, CAMERA_PIC_REQUEST);
+        } else {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+
+            // start the image capture Intent
+            startActivityForResult(intent, CAMERA_PIC_REQUEST);
+        }
+
+
+    }
+
     public Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
     }
@@ -788,6 +860,19 @@ public class FormLaporanActivity extends AppCompatActivity {
                     Toast.makeText(this, filename, Toast.LENGTH_SHORT).show();
                 }
             }
+        }else if (requestCode == CAMERA_PIC_REQUEST){
+            if (Build.VERSION.SDK_INT > 21) {
+                Glide.with(this).load(mImageFileLocation).into(gambar);
+                postBukti = mImageFileLocation;
+            }else{
+                Glide.with(this).load(fileUri).into(gambar);
+                postBukti = fileUri.getPath();
+            }
+            String filename=postBukti.substring(postBukti.lastIndexOf("/")+1);
+            gambar.setVisibility(View.VISIBLE);
+            tvGambar.setVisibility(View.VISIBLE);
+            tvGambar.setText(filename);
+            Gambar=false;
         }
     }
 }

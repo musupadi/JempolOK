@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout LBeranda,LAkun,LSetting;
     ImageView IBeranda,IAkun,ISetting,IBBeranda,IBAkun,IBSetting;
     TextView TBeranda,TAkun,TSetting;
-    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
