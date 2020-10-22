@@ -1,6 +1,9 @@
 package com.destinyapp.jempolok.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -8,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.destinyapp.jempolok.Activity.LoginActivity;
 import com.destinyapp.jempolok.Model.DataModel;
+import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.R;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
@@ -25,6 +31,7 @@ public class AdapterKategori extends RecyclerView.Adapter<AdapterKategori.Holder
     DB_Helper dbHelper;
     Boolean onClick=false;
     RecyclerView recyclerView;
+    Musupadi musupadi;
     public AdapterKategori (Context ctx, List<DataModel> mList,RecyclerView recyclerView){
         this.ctx = ctx;
         this.mList = mList;
@@ -42,13 +49,22 @@ public class AdapterKategori extends RecyclerView.Adapter<AdapterKategori.Holder
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         final DataModel dm = mList.get(posistion);
+        dbHelper = new DB_Helper(ctx);
+        musupadi=new Musupadi();
         if (posistion % 2 == 0){
             holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_primary);
         }else{
             holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_red);
         }
+        holderData.LayoutCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dbHelper.deleteKategori(String.valueOf(dm.getId_kategori()));
+                Toast.makeText(ctx, dm.getNama_kategori()+" Dihapus", Toast.LENGTH_SHORT).show();
+                musupadi.ReyclerView3(recyclerView,ctx);
+            }
+        });
         holderData.Nama.setText(dm.getNama_kategori());
-        dbHelper = new DB_Helper(ctx);
     }
 
     @Override

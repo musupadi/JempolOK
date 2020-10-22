@@ -21,6 +21,7 @@ import com.destinyapp.jempolok.Activity.LoginActivity;
 import com.destinyapp.jempolok.Activity.MainActivity;
 import com.destinyapp.jempolok.Model.ResponseModel;
 import com.destinyapp.jempolok.R;
+import com.destinyapp.jempolok.Services;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
 import retrofit2.Call;
@@ -62,6 +63,10 @@ public class SettingFragment extends Fragment {
                                 dbHelper.Logout();
                                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                                 startActivity(intent);
+                                final Intent serviceIntent = new Intent(getActivity(), Services.class);
+                                serviceIntent.putExtra("MESSAGE","Pemberitahuan");
+                                getActivity().stopService(intent);
+                                getActivity().finish();
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {

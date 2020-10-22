@@ -102,6 +102,15 @@ public interface ApiRequest {
                                         @Field("idReport") String idReport,
                                         @Field("statusReport") String statusReport);
 
+    @FormUrlEncoded
+    @POST("notif")
+    Call<ResponseModel> PostNotif(@Header("Authorization") String authHeader,
+                              @Field("idnotif") String idReport);
+
+    //GET
+    @GET("notif")
+    Call<ResponseModel> GetNotification(@Header("Authorization") String authHeader);
+
     @GET("report")
     Call<ResponseModel> Report(@Header("Authorization") String authHeader);
 

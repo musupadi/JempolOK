@@ -153,6 +153,25 @@ public class DataModel {
     @Expose
     public String tgl_input_kegiatan;
 
+    //Notification
+    @SerializedName("id_notif_report")
+    @Expose
+    public int id_notif_report;
+
+    @SerializedName("status_notif")
+    @Expose
+    public int status_notif;
+
+    @SerializedName("tgl_notif_terkirim")
+    @Expose
+    public String tgl_notif_terkirim;
+
+    @SerializedName("tgl_notif_terbaca")
+    @Expose
+    public String tgl_notif_terbaca;
+
+
+
     public String getAccessToken() {
         return accessToken;
     }
@@ -281,13 +300,7 @@ public class DataModel {
         this.kecamatan_report = kecamatan_report;
     }
 
-    public String getStatus_report() {
-        return status_report;
-    }
 
-    public void setStatus_report(String status_report) {
-        this.status_report = status_report;
-    }
 
     public String getAlasan_reject() {
         return alasan_reject;
@@ -439,5 +452,45 @@ public class DataModel {
 
     public void setTgl_input_kegiatan(String tgl_input_kegiatan) {
         this.tgl_input_kegiatan = tgl_input_kegiatan;
+    }
+
+    public String getStatus_report() {
+        return status_report;
+    }
+
+    public void setStatus_report(String status_report) {
+        this.status_report = status_report;
+    }
+
+    public int getId_notif_report() {
+        return id_notif_report;
+    }
+
+    public void setId_notif_report(int id_notif_report) {
+        this.id_notif_report = id_notif_report;
+    }
+
+    public int getStatus_notif() {
+        return status_notif;
+    }
+
+    public void setStatus_notif(int status_notif) {
+        this.status_notif = status_notif;
+    }
+
+    public String getTgl_notif_terkirim() {
+        return tgl_notif_terkirim;
+    }
+
+    public void setTgl_notif_terkirim(String tgl_notif_terkirim) {
+        this.tgl_notif_terkirim = tgl_notif_terkirim;
+    }
+
+    public String getTgl_notif_terbaca() {
+        return tgl_notif_terbaca;
+    }
+
+    public void setTgl_notif_terbaca(String tgl_notif_terbaca) {
+        this.tgl_notif_terbaca = tgl_notif_terbaca;
     }
 }

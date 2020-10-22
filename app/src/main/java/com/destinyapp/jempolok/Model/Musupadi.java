@@ -1,13 +1,19 @@
 package com.destinyapp.jempolok.Model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Base64;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
 import com.destinyapp.jempolok.Activity.CheckLaporanActivity;
 import com.destinyapp.jempolok.Activity.FormLaporanActivity;
+import com.destinyapp.jempolok.Activity.MainActivity;
+import com.destinyapp.jempolok.Adapter.AdapterKategori;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
 import java.text.DateFormat;
@@ -28,6 +34,19 @@ public class Musupadi {
     public String AUTH(String auth){
         String authHeader = "Bearer "+auth;
         return authHeader;
+    }
+    public void Back(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+    public void ReyclerView3(RecyclerView rv,final Context ctx){
+        rv.setHasFixedSize(true);
+//        recyclerKategori.setLayoutManager(new LinearLayoutManager(FormLaporanActivity.this));
+        rv.setLayoutManager(new GridLayoutManager(ctx, 3));
+        DB_Helper dbHelper = new DB_Helper(ctx);
+        AdapterKategori Adapter = new AdapterKategori(ctx,dbHelper.kategoriList(),rv);
+//        Adapter.notifyDataSetChanged();
+        rv.setAdapter(Adapter);
     }
     public void Login(final Context ctx,final String user,final String password){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);

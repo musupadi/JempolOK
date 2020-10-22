@@ -2,6 +2,8 @@ package com.destinyapp.jempolok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.destinyapp.jempolok.API.RetroServer;
 import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.Model.ResponseModel;
 import com.destinyapp.jempolok.R;
+import com.destinyapp.jempolok.Services;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
 import retrofit2.Call;
@@ -71,8 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "User Admin hanya bisa login di Web", Toast.LENGTH_SHORT).show();
                         }else{
                             dbHelper.saveUser(user.getText().toString(),password.getText().toString(),response.body().getData().get(0).accessToken,response.body().getData().get(0).namaUser,response.body().getData().get(0).fotoUser,response.body().getData().get(0).levelUser,response.body().getData().get(0).statusUser);
-                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                            startActivity(intent);
+                            musupadi.Back(LoginActivity.this);
                             finish();
                         }
                     }else{
@@ -94,5 +96,28 @@ public class LoginActivity extends AppCompatActivity {
                 loading.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setMessage("Keluar Dari Aplikasi ?")
+                .setCancelable(false)
+                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        LoginActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                //Set your icon here
+                .setTitle("Perhatian !!!")
+                .setIcon(R.drawable.ic_baseline_close_24_red);
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }

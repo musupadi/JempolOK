@@ -76,8 +76,7 @@ public class CheckLaporanActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CheckLaporanActivity.this,HomeActivity.class);
-                startActivity(intent);
+                musupadi.Back(CheckLaporanActivity.this);
                 finish();
             }
         });
@@ -85,8 +84,7 @@ public class CheckLaporanActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CheckLaporanActivity.this,HomeActivity.class);
-        startActivity(intent);
+        musupadi.Back(CheckLaporanActivity.this);
         finish();
     }
 

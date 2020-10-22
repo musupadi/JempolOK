@@ -131,25 +131,15 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 dbHelper.reseKategori();
                 dbHelper.resetKegiatan();
-                laporanKerusakan.startAnimation(animation);
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
-                        startActivity(intent);
-                    }
-                }, 500);
+                Intent intent = new Intent(getActivity(), FormLaporanActivity.class);
+                startActivity(intent);
             }
         });
         checklaporan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checklaporan.startAnimation(animation);
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
-                        startActivity(intent);
-                    }
-                }, 500);
+                Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
+                startActivity(intent);
             }
         });
         kerusakanpelaksana.setOnClickListener(new View.OnClickListener() {
@@ -165,13 +155,8 @@ public class HomeFragment extends Fragment {
         checklaporanpelaksana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checklaporanpelaksana.startAnimation(animation);
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
-                        startActivity(intent);
-                    }
-                }, 500);
+                Intent intent = new Intent(getActivity(), CheckLaporanActivity.class);
+                startActivity(intent);
             }
         });
     }

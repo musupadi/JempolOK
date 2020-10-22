@@ -235,28 +235,109 @@ public class FormLaporanActivity extends AppCompatActivity {
         upload2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gambar2 = true;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                new MaterialDialog.Builder(FormLaporanActivity.this)
+                        .title("Pilih Gambar")
+                        .items(R.array.uploadImages)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Gambar2 = true;
+                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        gambar2.setVisibility(View.VISIBLE);
+                                        tvGambar2.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 1:
+                                        captureImage();
+                                        gambar2.setVisibility(View.VISIBLE);
+                                        tvGambar2.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 2:
+                                        gambar2.setImageResource(R.drawable.ic_launcher_background);
+                                        gambar2.setVisibility(View.GONE);
+                                        tvGambar2.setVisibility(View.GONE);
+                                        Gambar2 = false;
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         upload3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gambar3 = true;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                new MaterialDialog.Builder(FormLaporanActivity.this)
+                        .title("Pilih Gambar")
+                        .items(R.array.uploadImages)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Gambar3 = true;
+                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        gambar3.setVisibility(View.VISIBLE);
+                                        tvGambar4.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 1:
+                                        captureImage();
+                                        gambar3.setVisibility(View.VISIBLE);
+                                        tvGambar3.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 2:
+                                        gambar3.setImageResource(R.drawable.ic_launcher_background);
+                                        gambar3.setVisibility(View.GONE);
+                                        tvGambar3.setVisibility(View.GONE);
+                                        Gambar3 = false;
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         upload4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gambar4 = true;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                new MaterialDialog.Builder(FormLaporanActivity.this)
+                        .title("Pilih Gambar")
+                        .items(R.array.uploadImages)
+                        .itemsIds(R.array.itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Gambar4 = true;
+                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        gambar4.setVisibility(View.VISIBLE);
+                                        tvGambar4.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 1:
+                                        captureImage();
+                                        gambar4.setVisibility(View.VISIBLE);
+                                        tvGambar4.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 2:
+                                        gambar4.setImageResource(R.drawable.ic_launcher_background);
+                                        gambar4.setVisibility(View.GONE);
+                                        tvGambar4.setVisibility(View.GONE);
+                                        Gambar = false;
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         dbHelper = new DB_Helper(FormLaporanActivity.this);
@@ -286,22 +367,26 @@ public class FormLaporanActivity extends AppCompatActivity {
                                     case 0:
                                         Gambar = true;
                                         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                         startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                        gambar.setVisibility(View.VISIBLE);
+                                        tvGambar.setVisibility(View.VISIBLE);
                                         break;
                                     case 1:
                                         captureImage();
+                                        gambar.setVisibility(View.VISIBLE);
+                                        tvGambar.setVisibility(View.VISIBLE);
                                         break;
-//                                    case 2:
-//                                        imageView.setImageResource(R.drawable.ic_launcher_background);
-//                                        break;
+                                    case 2:
+                                        gambar.setImageResource(R.drawable.ic_launcher_background);
+                                        gambar.setVisibility(View.GONE);
+                                        tvGambar.setVisibility(View.GONE);
+                                        Gambar = false;
+                                        break;
                                 }
                             }
                         })
                         .show();
-
-
-
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -313,8 +398,7 @@ public class FormLaporanActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FormLaporanActivity.this,HomeActivity.class);
-                startActivity(intent);
+                musupadi.Back(FormLaporanActivity.this);
                 finish();
             }
         });
@@ -322,8 +406,7 @@ public class FormLaporanActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(FormLaporanActivity.this,HomeActivity.class);
-        startActivity(intent);
+        musupadi.Back(FormLaporanActivity.this);
         finish();
     }
 
@@ -368,6 +451,7 @@ public class FormLaporanActivity extends AppCompatActivity {
         recyclerKategori.setLayoutManager(new GridLayoutManager(FormLaporanActivity.this, 3));
         dbHelper = new DB_Helper(FormLaporanActivity.this);
         AdapterKategori Adapter = new AdapterKategori(FormLaporanActivity.this,dbHelper.kategoriList(),recyclerKategori);
+//        Adapter.notifyDataSetChanged();
         recyclerKategori.setAdapter(Adapter);
     }
     private void ListKegiatan(){
@@ -412,7 +496,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
                             Login(pd);
@@ -464,7 +548,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
@@ -522,7 +606,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);
@@ -585,7 +669,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                         if (response.body().getStatusCode().equals("000")){
                             Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
                             pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,HomeActivity.class);
+                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
                             startActivity(intent);
                         }else if(response.body().getStatusCode().equals("002")){
                             Login(pd);

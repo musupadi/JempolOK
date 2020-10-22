@@ -6,6 +6,7 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical">
     <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
         android:layout_weight="1"
         app:lottie_loop="true"
         app:lottie_fileName="animation blue waves.json"
@@ -14,6 +15,11 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY">
     </com.airbnb.lottie.LottieAnimationView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:visibility="gone"/>
     <FrameLayout
         android:id="@+id/Container"
         android:layout_width="match_parent"
