@@ -142,7 +142,7 @@
                                 android:id="@+id/etNamaLaporan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Laporan"
+                                android:hint="Judul Laporan"
                                 android:ems="10"
                                 android:inputType="text|textMultiLine"
                                 android:textSize="20sp"/>
@@ -165,7 +165,7 @@
                                 android:id="@+id/etDeskripsi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Deskripsi"
+                                android:hint="Detail Deskripsi"
                                 android:ems="10"
                                 android:inputType="text|textMultiLine"
                                 android:textSize="20sp"/>
@@ -336,7 +336,7 @@
                                     android:fontFamily="@font/roboto"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Pilih Kegiatan : "
+                                    android:text="Pilih Kegiatan Pemeliharaan : "
                                     android:textColor="@color/colorAccent"
                                     android:textSize="20sp"/>
                                 <LinearLayout
