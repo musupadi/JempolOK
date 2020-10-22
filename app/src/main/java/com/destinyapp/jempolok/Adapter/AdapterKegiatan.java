@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.destinyapp.jempolok.Model.DataModel;
+import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.R;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
@@ -23,6 +25,7 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.Holder
     DB_Helper dbHelper;
     Boolean onClick=false;
     RecyclerView recyclerView;
+    Musupadi musupadi;
     public AdapterKegiatan (Context ctx, List<DataModel> mList,RecyclerView recyclerView){
         this.ctx = ctx;
         this.mList = mList;
@@ -40,11 +43,20 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.Holder
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         final DataModel dm = mList.get(posistion);
+        musupadi = new Musupadi();
         if (posistion % 2 == 0){
             holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_primary);
         }else{
             holderData.LayoutCardView.setBackgroundResource(R.drawable.rounded_menu_red);
         }
+        holderData.LayoutCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dbHelper.deleteKegiatan(String.valueOf(dm.getId_kegiatan()));
+                Toast.makeText(ctx, dm.getNama_kegiatan()+" Dihapus", Toast.LENGTH_SHORT).show();
+                musupadi.ReyclerView3(recyclerView,ctx,"Kegiatan");
+            }
+        });
         holderData.Nama.setText(dm.getNama_kegiatan());
         dbHelper = new DB_Helper(ctx);
     }

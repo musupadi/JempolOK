@@ -51,11 +51,15 @@ public class Services extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-        AlarmHandler alarmHandler = new AlarmHandler(this);
+        try {
+            AlarmHandler alarmHandler = new AlarmHandler(this);
 //        alarmHandler.CancelAlarm();
-        alarmHandler.setAlarmManager();
+            alarmHandler.setAlarmManager();
 
-        Logic(intent);
+            Logic(intent);
+        }catch (Exception e){
+
+        }
         return START_STICKY;
     }
 
@@ -95,7 +99,12 @@ public class Services extends Service {
 
                             }else{
                                 stopService();
-                                startService(intent);
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        startService(intent);
+                                    }
+                                }, 60000); //3000 L = 3 detik
+
                             }
                         }else{
                             musupadi.Login(Services.this,user,password);
@@ -120,7 +129,7 @@ public class Services extends Service {
         notificationIntent.putExtra("NOTIF",ID);
         Bitmap myLogo = BitmapFactory.decodeResource(getApplication().getResources(), R.drawable.jempol);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0,notificationIntent,PendingIntent.FLAG_ONE_SHOT);
+                0,notificationIntent,0);
         Uri alarmSound = RingtoneManager
                 .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Notification notification = new NotificationCompat.Builder(this,CHANNEL_ID)
@@ -139,8 +148,11 @@ public class Services extends Service {
                 .setSound(alarmSound)
                 .setGroup(GROUP_KEY)
                 .setGroupSummary(true)
+                .setOngoing(false)
+                .setDeleteIntent(pendingIntent)
                 .build();
         startForeground(1,notification);
+        stopForeground(false);
     }
     @Nullable
     @Override

@@ -197,15 +197,46 @@ public class FormLaporanActivity extends AppCompatActivity {
         TambahKategori.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbHelper.saveIDKategori(Kat.getText().toString(),kat.getText().toString());
-                ListKategori();
+                Cursor cursors = dbHelper.checkKategori();
+                String ID,Nama;
+                Boolean enter = true;
+                if (cursors.getCount()>0){
+                    while (cursors.moveToNext()){
+                        ID = cursors.getString(0);
+                        Nama = cursors.getString(1);
+                        if (ID.equals(Kat.getText().toString())){
+                            Toast.makeText(FormLaporanActivity.this, "Kategori ini sudah dimasukan ke List", Toast.LENGTH_SHORT).show();
+                            enter=false;
+                        }
+                    }
+                }
+                if (enter){
+                    dbHelper.saveIDKategori(Kat.getText().toString(),kat.getText().toString());
+                    ListKategori();
+                }
             }
         });
         TambahKegiatan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbHelper.saveIDKegiatan(Keg.getText().toString(),keg.getText().toString());
-                ListKegiatan();
+                Cursor cursors = dbHelper.checkKegiatan();
+                String ID,Nama;
+                Boolean enter = true;
+                if (cursors.getCount()>0){
+                    while (cursors.moveToNext()){
+                        ID = cursors.getString(0);
+                        Nama = cursors.getString(1);
+                        if (ID.equals(Keg.getText().toString())){
+                            Toast.makeText(FormLaporanActivity.this, "Kegiatan ini sudah dimasukan ke List", Toast.LENGTH_SHORT).show();
+                            enter=false;
+                        }
+                    }
+                }
+                if (enter){
+                    dbHelper.saveIDKegiatan(Keg.getText().toString(),keg.getText().toString());
+                    ListKegiatan();
+                }
+
             }
         });
         Tambah.setOnClickListener(new View.OnClickListener() {
@@ -459,7 +490,7 @@ public class FormLaporanActivity extends AppCompatActivity {
 //        recyclerKategori.setLayoutManager(new LinearLayoutManager(FormLaporanActivity.this));
         recyclerKegiatan.setLayoutManager(new GridLayoutManager(FormLaporanActivity.this, 3));
         dbHelper = new DB_Helper(FormLaporanActivity.this);
-        AdapterKegiatan Adapter = new AdapterKegiatan(FormLaporanActivity.this,dbHelper.kegiatanList(),recyclerKategori);
+        AdapterKegiatan Adapter = new AdapterKegiatan(FormLaporanActivity.this,dbHelper.kegiatanList(),recyclerKegiatan);
         recyclerKegiatan.setAdapter(Adapter);
     }
     private void Logic(){

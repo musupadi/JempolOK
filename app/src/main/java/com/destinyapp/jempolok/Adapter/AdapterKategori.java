@@ -61,7 +61,7 @@ public class AdapterKategori extends RecyclerView.Adapter<AdapterKategori.Holder
             public void onClick(View view) {
                 dbHelper.deleteKategori(String.valueOf(dm.getId_kategori()));
                 Toast.makeText(ctx, dm.getNama_kategori()+" Dihapus", Toast.LENGTH_SHORT).show();
-                musupadi.ReyclerView3(recyclerView,ctx);
+                musupadi.ReyclerView3(recyclerView,ctx,"Kategori");
             }
         });
         holderData.Nama.setText(dm.getNama_kategori());

@@ -14,6 +14,7 @@ import com.destinyapp.jempolok.Activity.CheckLaporanActivity;
 import com.destinyapp.jempolok.Activity.FormLaporanActivity;
 import com.destinyapp.jempolok.Activity.MainActivity;
 import com.destinyapp.jempolok.Adapter.AdapterKategori;
+import com.destinyapp.jempolok.Adapter.AdapterKegiatan;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
 import java.text.DateFormat;
@@ -39,14 +40,21 @@ public class Musupadi {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
-    public void ReyclerView3(RecyclerView rv,final Context ctx){
+    public void ReyclerView3(RecyclerView rv,final Context ctx,String Adapter){
         rv.setHasFixedSize(true);
 //        recyclerKategori.setLayoutManager(new LinearLayoutManager(FormLaporanActivity.this));
         rv.setLayoutManager(new GridLayoutManager(ctx, 3));
         DB_Helper dbHelper = new DB_Helper(ctx);
-        AdapterKategori Adapter = new AdapterKategori(ctx,dbHelper.kategoriList(),rv);
+        if (Adapter.equals("Kegiatan")){
+            AdapterKegiatan adapter = new AdapterKegiatan(ctx,dbHelper.kegiatanList(),rv);
+            rv.setAdapter(adapter);
+        }else if (Adapter.equals("Kategori")){
+            AdapterKategori adapter = new AdapterKategori(ctx,dbHelper.kategoriList(),rv);
+            rv.setAdapter(adapter);
+        }
+
 //        Adapter.notifyDataSetChanged();
-        rv.setAdapter(Adapter);
+
     }
     public void Login(final Context ctx,final String user,final String password){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
