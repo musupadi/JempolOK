@@ -169,12 +169,12 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_yellow);
             holderData.tvStatus.setVisibility(View.GONE);
             holderData.ivStatus.setVisibility(View.VISIBLE);
-        }else if(dm.getStatus_report().equals("pending")){
+        }else if(dm.getStatus_report().equals("pending 1")){
             holderData.Status.setText("Pending");
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_red);
             holderData.tvStatus.setVisibility(View.GONE);
             holderData.ivStatus.setVisibility(View.GONE);
-        }else if(dm.getStatus_report().equals("rejected")){
+        }else if(dm.getStatus_report().equals("reject")){
             holderData.Status.setText("Reject");
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_black);
             holderData.tvStatus.setVisibility(View.GONE);

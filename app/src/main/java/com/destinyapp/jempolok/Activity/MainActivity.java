@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+    
     private void SelectedBottomNavigation(int itemIndex){
         if (itemIndex==0){
             fragment = new UserFragment();

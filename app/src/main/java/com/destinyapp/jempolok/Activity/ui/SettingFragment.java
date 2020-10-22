@@ -66,7 +66,7 @@ public class SettingFragment extends Fragment {
                                 final Intent serviceIntent = new Intent(getActivity(), Services.class);
                                 serviceIntent.putExtra("MESSAGE","Pemberitahuan");
                                 getActivity().stopService(intent);
-                                getActivity().finish();
+                                getActivity().finishAffinity();
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {

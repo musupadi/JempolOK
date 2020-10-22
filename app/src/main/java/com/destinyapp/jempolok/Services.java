@@ -22,6 +22,7 @@ import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
 import com.destinyapp.jempolok.Activity.HomeActivity;
 import com.destinyapp.jempolok.Activity.LoginActivity;
+import com.destinyapp.jempolok.Activity.MainActivity;
 import com.destinyapp.jempolok.Activity.SplashScreenActivity;
 import com.destinyapp.jempolok.Alarm.AlarmHandler;
 import com.destinyapp.jempolok.Model.Musupadi;
@@ -57,13 +58,11 @@ public class Services extends Service {
             alarmHandler.setAlarmManager();
 
             Logic(intent);
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
-
-
 
     private void Logic(final Intent intent){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
@@ -125,7 +124,7 @@ public class Services extends Service {
     }
     private void NOTIFY(Intent intent,String ID){
         String message = intent.getStringExtra("MESSAGE");
-        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.putExtra("NOTIF",ID);
         Bitmap myLogo = BitmapFactory.decodeResource(getApplication().getResources(), R.drawable.jempol);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,

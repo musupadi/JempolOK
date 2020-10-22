@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         return Check;
     }
     private void Logic(){
+        user.setEnabled(false);
+        password.setEnabled(false);
         available.setAlpha((float) 0.5);
         loading.setVisibility(View.VISIBLE);
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
@@ -82,10 +84,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     available.setAlpha((float) 1.0);
                     loading.setVisibility(View.GONE);
+                    user.setEnabled(true);
+                    password.setEnabled(true);
                 }catch (Exception e){
                     Toast.makeText(LoginActivity.this, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
                     available.setAlpha((float) 1.0);
                     loading.setVisibility(View.GONE);
+                    user.setEnabled(true);
+                    password.setEnabled(true);
                 }
             }
 
@@ -94,6 +100,8 @@ public class LoginActivity extends AppCompatActivity {
 //                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
                 Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
                 loading.setVisibility(View.GONE);
+                user.setEnabled(true);
+                password.setEnabled(true);
             }
         });
     }
