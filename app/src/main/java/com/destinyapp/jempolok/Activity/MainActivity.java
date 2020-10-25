@@ -31,6 +31,9 @@ import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 import com.onesignal.OneSignal;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -114,6 +117,41 @@ public class MainActivity extends AppCompatActivity {
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
+
+        String externalUserId = "3"; // You will supply the external user id to the OneSignal SDK
+
+// Setting External User Id with Callback Available in SDK Version 3.13.0+
+        OneSignal.setExternalUserId(externalUserId, new OneSignal.OSExternalUserIdUpdateCompletionHandler() {
+            @Override
+            public void onComplete(JSONObject results) {
+                // The results will contain push and email success statuses
+                OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id done with results: " + results.toString());
+
+                // Push can be expected in almost every situation with a success status, but
+                // as a pre-caution its good to verify it exists
+                try {
+                    if (results.has("push") && results.getJSONObject("push").has("success")) {
+                        boolean isPushSuccess = results.getJSONObject("push").getBoolean("success");
+                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id for push status: " + isPushSuccess);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // Verify the email is set or check that the results have an email success status
+                try {
+                    if (results.has("email") && results.getJSONObject("email").has("success")) {
+                        boolean isEmailSuccess = results.getJSONObject("email").getBoolean("success");
+                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Sets external user id for email status: " + isEmailSuccess);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+//Available with SDK Version 3.12.7-
+//OneSignal.setExternalUserId(myCustomUniqueUserId);
     }
 
     @Override
