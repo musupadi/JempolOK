@@ -9,6 +9,7 @@ import android.os.Handler;
 
 import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.R;
+import com.destinyapp.jempolok.Services;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
 public class SplashScreenActivity extends AppCompatActivity {

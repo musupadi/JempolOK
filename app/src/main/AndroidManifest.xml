@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.destinyapp.jempolok">
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,11 +12,12 @@
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <application
         android:name=".App"
+        android:persistent="true"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/icon_temporary"
@@ -25,8 +27,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.CheckLaporanActivity"
+        <activity android:name=".Activity.AssignFinishActivity"
             android:theme="@style/AppThemeNoAction"></activity>
+        <activity
+            android:name=".Activity.CheckLaporanActivity"
+            android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".Activity.HomeActivity"
             android:theme="@style/AppThemeNoAction" />
@@ -48,10 +53,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver
-            android:name=".Alarm.ExecutableService"
-            android:enabled="true"
-            android:exported="true"/>
+
+
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -59,11 +63,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
-        <service android:name=".Services"
-            android:enabled="true"
-            android:exported="true" />
+
+
     </application>
 
 </manifest>

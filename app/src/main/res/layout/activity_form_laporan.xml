@@ -116,7 +116,7 @@
                             android:text="Laporan"
                             android:gravity="center"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="22sp"
+                            android:textSize="20sp"
                             android:fontFamily="@font/roboto"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"/>
@@ -145,7 +145,7 @@
                                 android:hint="Judul Laporan"
                                 android:ems="10"
                                 android:inputType="text|textMultiLine"
-                                android:textSize="20sp"/>
+                                android:textSize="14sp"/>
                         </com.google.android.material.textfield.TextInputLayout>
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_marginTop="5dp"
@@ -168,7 +168,7 @@
                                 android:hint="Detail Deskripsi"
                                 android:ems="10"
                                 android:inputType="text|textMultiLine"
-                                android:textSize="20sp"/>
+                                android:textSize="14sp"/>
                         </com.google.android.material.textfield.TextInputLayout>
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_marginTop="5dp"
@@ -182,8 +182,10 @@
                             android:paddingRight="10dp"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
+                            android:visibility="gone"
                             android:background="@drawable/back_edit_text">
                             <EditText
+                                android:visibility="gone"
                                 android:fontFamily="@font/roboto"
                                 android:id="@+id/etKegiatanPemeliharaan"
                                 android:layout_width="match_parent"
@@ -191,7 +193,7 @@
                                 android:hint="Kegiatan Pemeliharaan"
                                 android:ems="10"
                                 android:inputType="text|textMultiLine"
-                                android:textSize="20sp"/>
+                                android:textSize="14sp"/>
                         </com.google.android.material.textfield.TextInputLayout>
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_marginTop="5dp"
@@ -211,10 +213,10 @@
                                 android:id="@+id/etAlasan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Alasan"
+                                android:hint="Alasan Laporan"
                                 android:ems="10"
                                 android:inputType="text|textMultiLine"
-                                android:textSize="20sp"/>
+                                android:textSize="14sp"/>
                         </com.google.android.material.textfield.TextInputLayout>
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -231,6 +233,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_marginLeft="5dp"
                                     android:fontFamily="@font/roboto"
                                     android:layout_width="match_parent"
@@ -239,6 +242,7 @@
                                     android:textColor="@color/colorAccent"
                                     android:textSize="20sp"/>
                                 <Spinner
+                                    android:visibility="gone"
                                     android:fontFamily="@font/roboto"
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
@@ -253,14 +257,14 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="PilihLokasi : "
-                                    android:textSize="20sp"/>
+                                    android:textSize="14sp"/>
                                 <Spinner
                                     android:layout_marginBottom="5dp"
                                     android:fontFamily="@font/roboto"
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:id="@+id/spLokasi"
-                                    android:textSize="20sp"
+                                    android:textSize="14sp"
                                     android:entries="@array/Lokasi"/>
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -286,7 +290,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Pilih Kategori : "
                                     android:textColor="@color/colorAccent"
-                                    android:textSize="20sp"/>
+                                    android:textSize="14sp"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -297,7 +301,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:id="@+id/spKategori"
-                                        android:textSize="20sp"
+                                        android:textSize="14sp"
                                         android:entries="@array/Kecamatan"
                                         android:layout_weight="1"/>
                                     <Button
@@ -338,7 +342,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Pilih Kegiatan Pemeliharaan : "
                                     android:textColor="@color/colorAccent"
-                                    android:textSize="20sp"/>
+                                    android:textSize="14sp"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -349,7 +353,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:id="@+id/spKegiatan"
-                                        android:textSize="20sp"
+                                        android:textSize="14sp"
                                         android:entries="@array/Kecamatan"
                                         android:layout_weight="1"/>
                                     <Button
@@ -390,7 +394,7 @@
                                 android:hint="Detail Lokasi"
                                 android:ems="10"
                                 android:inputType="text|textMultiLine"
-                                android:textSize="20sp"/>
+                                android:textSize="14sp"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView
@@ -400,7 +404,7 @@
                             android:layout_height="wrap_content"
                             android:text="Pilih Foto"
                             android:textColor="@color/colorAccent"
-                            android:textSize="20sp"/>
+                            android:textSize="14sp"/>
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -417,7 +421,7 @@
                                     android:id="@+id/btnUpload"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Upload"
+                                    android:text="Pilih Gambar"
                                     android:background="@drawable/btn_rounded_primary"
                                     android:textColor="@color/colorWhite"
                                     android:layout_margin="10dp"

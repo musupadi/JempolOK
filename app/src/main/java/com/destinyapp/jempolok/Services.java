@@ -17,6 +17,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
@@ -52,8 +53,11 @@ public class Services extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+
         try {
+
             AlarmHandler alarmHandler = new AlarmHandler(this);
+
 //        alarmHandler.CancelAlarm();
             alarmHandler.setAlarmManager();
 
@@ -63,6 +67,7 @@ public class Services extends Service {
         }
         return START_NOT_STICKY;
     }
+
 
     private void Logic(final Intent intent){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
@@ -102,7 +107,7 @@ public class Services extends Service {
                                     public void run() {
                                         startService(intent);
                                     }
-                                }, 60000); //3000 L = 3 detik
+                                }, 30000); //3000 L = 3 detik
 
                             }
                         }else{
@@ -122,8 +127,8 @@ public class Services extends Service {
             });
         }
     }
+
     private void NOTIFY(Intent intent,String ID){
-        String message = intent.getStringExtra("MESSAGE");
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.putExtra("NOTIF",ID);
         Bitmap myLogo = BitmapFactory.decodeResource(getApplication().getResources(), R.drawable.jempol);
@@ -133,7 +138,7 @@ public class Services extends Service {
                 .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Notification notification = new NotificationCompat.Builder(this,CHANNEL_ID)
                 .setContentTitle("Si Jempol Apps")
-                .setContentText(message)
+                .setContentText("Terdapat laporan baru yang harus dikerjakan")
                 .setSmallIcon(R.mipmap.icon_temporary_foreground)
                 .setLargeIcon(myLogo)
 //                .setStyle(new NotificationCompat.BigTextStyle()
@@ -141,7 +146,7 @@ public class Services extends Service {
                 .setContentIntent(pendingIntent)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(true)
-                .setLights(Color.BLUE, 500, 500).setContentText(message)
+                .setLights(Color.BLUE, 500, 500).setContentText("Terdapat laporan baru yang harus dikerjakan")
 //                .setAutoCancel(true).setTicker("Notification Si Jempol")
                 .setVibrate(new long[] { 100, 250, 100, 250, 100, 250 })
                 .setSound(alarmSound)
@@ -150,12 +155,25 @@ public class Services extends Service {
                 .setOngoing(false)
                 .setDeleteIntent(pendingIntent)
                 .build();
-        startForeground(1,notification);
-        stopForeground(false);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, notification);
     }
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        try {
+
+            AlarmHandler alarmHandler = new AlarmHandler(this);
+
+//        alarmHandler.CancelAlarm();
+            alarmHandler.setAlarmManager();
+
+            Logic(intent);
+        }catch (Exception ignored){
+
+        }
         return null;
     }
 

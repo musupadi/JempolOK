@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -97,6 +99,7 @@ public class CheckLaporanActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mManager);
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> Data = api.Report(musupadi.AUTH(token));
+        final LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(CheckLaporanActivity.this,R.anim.layout_animation);
         Data.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -106,6 +109,8 @@ public class CheckLaporanActivity extends AppCompatActivity {
                         mItems=response.body().getData();
                         mAdapter = new AdapterReport(CheckLaporanActivity.this,mItems);
                         recyclerView.setAdapter(mAdapter);
+                        recyclerView.setLayoutAnimation(layoutAnimationController);
+                        recyclerView.scheduleLayoutAnimation();
                         mAdapter.notifyDataSetChanged();
                         loading.setVisibility(View.GONE);
                     }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){

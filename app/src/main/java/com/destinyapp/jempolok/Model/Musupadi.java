@@ -1,5 +1,6 @@
 package com.destinyapp.jempolok.Model;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
@@ -15,6 +16,7 @@ import com.destinyapp.jempolok.Activity.FormLaporanActivity;
 import com.destinyapp.jempolok.Activity.MainActivity;
 import com.destinyapp.jempolok.Adapter.AdapterKategori;
 import com.destinyapp.jempolok.Adapter.AdapterKegiatan;
+import com.destinyapp.jempolok.Adapter.AdapterRateTeknisi;
 import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 
 import java.text.DateFormat;
@@ -40,6 +42,61 @@ public class Musupadi {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
+    private void initOPPO(Context ctx) {
+        try {
+
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            i.setComponent(new ComponentName("com.oppo.safe", "com.oppo.safe.permission.floatwindow.FloatWindowListActivity"));
+            ctx.startActivity(i);
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+
+                Intent intent = new Intent("action.coloros.safecenter.FloatWindowListActivity");
+                intent.setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.permission.floatwindow.FloatWindowListActivity"));
+                ctx.startActivity(intent);
+            } catch (Exception ee) {
+
+                ee.printStackTrace();
+                try{
+
+                    Intent i = new Intent("com.coloros.safecenter");
+                    i.setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.sysfloatwindow.FloatWindowListActivity"));
+                    ctx.startActivity(i);
+                }catch (Exception e1){
+
+                    e1.printStackTrace();
+                }
+            }
+
+        }
+    }
+    private static void autoLaunchVivo(Context context) {
+        try {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName("com.iqoo.secure",
+                    "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity"));
+            context.startActivity(intent);
+        } catch (Exception e) {
+            try {
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.vivo.permissionmanager",
+                        "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"));
+                context.startActivity(intent);
+            } catch (Exception ex) {
+                try {
+                    Intent intent = new Intent();
+                    intent.setClassName("com.iqoo.secure",
+                            "com.iqoo.secure.ui.phoneoptimize.BgStartUpManager");
+                    context.startActivity(intent);
+                } catch (Exception exx) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+
     public void ReyclerView3(RecyclerView rv,final Context ctx,String Adapter){
         rv.setHasFixedSize(true);
 //        recyclerKategori.setLayoutManager(new LinearLayoutManager(FormLaporanActivity.this));

@@ -9,7 +9,7 @@
         android:textSize="0.1sp"
         android:id="@+id/tvId"/>
     <TextView
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:fontFamily="@font/roboto"
         android:textColor="@color/colorBlack"
         android:id="@+id/tvSpinner"

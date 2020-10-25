@@ -12,13 +12,17 @@ public class AlarmHandler {
     }
 
     public void setAlarmManager(){
-        Intent intent = new Intent(context,ExecutableService.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context,2,intent,0);
-        AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
-        if (am != null){
-            long After = 1000;
-            long every = 60000;
-            am.setRepeating(AlarmManager.RTC_WAKEUP,After,every,sender);
+        try {
+            Intent intent = new Intent(context,ExecutableService.class);
+            PendingIntent sender = PendingIntent.getBroadcast(context,2,intent,0);
+            AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+            if (am != null){
+                long After = 10000;
+                long every = 600000;
+                am.setRepeating(AlarmManager.RTC_WAKEUP,After,every,sender);
+            }
+        }catch (Exception ignored){
+
         }
     }
 

@@ -15,6 +15,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiRequest {
@@ -34,9 +35,10 @@ public interface ApiRequest {
                                     @Part("detailLokasi") RequestBody detailLokasi,
                                     @Part("kecamatanReport") RequestBody kecamatanReport,
                                     @Part("tanggalReport") RequestBody tanggalReport,
-                                    @Part("alasanReject") RequestBody alasanReject,
+                                    @Part("alasanReport") RequestBody alasanReport,
                                     @Query("kegiatan[]") ArrayList<String> kegiatan,
-                                    @Query("kategori[]") ArrayList<String> kategori);
+                                    @Query("kategori[]") ArrayList<String> kategori,
+                                    @Part("alasanReject") RequestBody alasanReject);
 
     @Multipart
     @POST("report")
@@ -96,6 +98,16 @@ public interface ApiRequest {
                                         @Field("statusReport") String statusReport,
                                         @Field("idTeknisi[]") List<String> idTeknisi);
 
+    @Multipart
+    @POST("report_assign")
+    Call<ResponseModel> AssignSucces(@Header("Authorization") String authHeader,
+                                     @Part("idReport") RequestBody idReport,
+                                     @Part("statusReport") RequestBody statusReport,
+                                     @Part MultipartBody.Part photo,
+                                     @Query("idTeknisi[]") ArrayList<String> idTeknisi,
+                                     @Query("scoreId[]") ArrayList<String> scoreId,
+                                     @Query("isiReview[]") ArrayList<String> isiReview);
+
     @FormUrlEncoded
     @POST("report_assign")
     Call<ResponseModel> Asign(@Header("Authorization") String authHeader,
@@ -113,6 +125,10 @@ public interface ApiRequest {
 
     @GET("report")
     Call<ResponseModel> Report(@Header("Authorization") String authHeader);
+
+    @GET("report?")
+    Call<ResponseModel> ReportIDS(@Header("Authorization") String authHeader,
+                                  @Query("idReport") String idReport);
 
     @GET("teknisi")
     Call<ResponseModel> Teknisi(@Header("Authorization") String authHeader);

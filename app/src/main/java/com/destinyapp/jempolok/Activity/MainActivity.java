@@ -1,13 +1,16 @@
 package com.destinyapp.jempolok.Activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ import com.destinyapp.jempolok.SharedPreferance.DB_Helper;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
+import com.onesignal.OneSignal;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,19 +40,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends AppCompatActivity {
     String user,password,token,nama,foto,level,status;
     SpaceNavigationView spaceNavigationView;
     TextView item;
     Fragment fragment;
     Musupadi musupadi;
-    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
+    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent data = getIntent();
-        String message = data.getStringExtra("NOTIF");
         musupadi = new Musupadi();
         final DB_Helper dbHelper = new DB_Helper(MainActivity.this);
         Cursor cursor = dbHelper.checkUser();
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         if(EasyPermissions.hasPermissions(MainActivity.this, galleryPermissions)) {
 
         }else{
-            EasyPermissions.requestPermissions(MainActivity.this, "Access for storage",
+            EasyPermissions.requestPermissions(MainActivity.this, "Access All Apps Feature",
                     101, galleryPermissions);
         }
 //        Toast.makeText(this, "Username : "+user+" password : "+password+" Token : "+token, Toast.LENGTH_SHORT).show();
@@ -99,37 +102,25 @@ public class MainActivity extends AppCompatActivity {
                 SelectedBottomNavigation(itemIndex);
             }
         });
-
-        final Intent serviceIntent = new Intent(this, Services.class);
-        serviceIntent.putExtra("MESSAGE","Pemberitahuan");
-        startService(serviceIntent);
-        if (message != null){
-            ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-            Call<ResponseModel> Data = api.PostNotif(musupadi.AUTH(token),message);
-            Data.enqueue(new Callback<ResponseModel>() {
-                @Override
-                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                    try {
-                        if (response.body().getStatusCode().equals("000")){
-                            stopService(serviceIntent);
-                            startService(serviceIntent);
-                        }else{
-                            musupadi.Login(MainActivity.this,user,password);
-                        }
-
-                    }catch (Exception e){
-                        Log.i("ERROR : ",e.toString());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseModel> call, Throwable t) {
-
-                }
-            });
-        }
+        NOTIFY();
     }
-    
+
+    private void NOTIFY(){
+        // Logging set to help debug issues, remove before releasing your app.
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void SelectedBottomNavigation(int itemIndex){
         if (itemIndex==0){
             fragment = new UserFragment();

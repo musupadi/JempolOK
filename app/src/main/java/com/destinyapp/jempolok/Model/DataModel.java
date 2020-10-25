@@ -1,7 +1,11 @@
 package com.destinyapp.jempolok.Model;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class DataModel {
     @SerializedName("accessToken")
@@ -61,6 +65,9 @@ public class DataModel {
     @Expose
     public String lokasi;
 
+    @SerializedName("gambar")
+    @Expose
+    public String gambar;
 
     @SerializedName("detail_lokasi")
     @Expose
@@ -170,7 +177,9 @@ public class DataModel {
     @Expose
     public String tgl_notif_terbaca;
 
-
+    @SerializedName("teknisi")
+    @Nullable
+    List<Teknisi> teknisi;
 
     public String getAccessToken() {
         return accessToken;
@@ -492,5 +501,22 @@ public class DataModel {
 
     public void setTgl_notif_terbaca(String tgl_notif_terbaca) {
         this.tgl_notif_terbaca = tgl_notif_terbaca;
+    }
+
+    @Nullable
+    public List<Teknisi> getTeknisi() {
+        return teknisi;
+    }
+
+    public void setTeknisi(@Nullable List<Teknisi> teknisi) {
+        this.teknisi = teknisi;
+    }
+
+    public String getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
     }
 }

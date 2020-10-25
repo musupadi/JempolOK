@@ -446,8 +446,6 @@ public class FormLaporanActivity extends AppCompatActivity {
             Toast.makeText(this, "Masukan Laporan", Toast.LENGTH_SHORT).show();
         }else if(Deskripsi.getText().toString().isEmpty()){
             Toast.makeText(this, "Masukan Deskripsi", Toast.LENGTH_SHORT).show();
-        }else if(Kegiatan.getText().toString().isEmpty()){
-            Toast.makeText(this, "Masukan Kegiatan", Toast.LENGTH_SHORT).show();
         }else if(DetailLokasi.getText().toString().isEmpty()){
             Toast.makeText(this, "Masukan Detail Lokasi", Toast.LENGTH_SHORT).show();
         }else if(Alasan.getText().toString().isEmpty()){
@@ -511,14 +509,15 @@ public class FormLaporanActivity extends AppCompatActivity {
                     RequestBody.create(MediaType.parse("text/plain"),Laporan.getText().toString()),
                     partPhoto,
                     RequestBody.create(MediaType.parse("text/plain"),Deskripsi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),Kegiatan.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),Lokasi.getSelectedItem().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
                     RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
                     IDKegiatan,
-                    IDKategori
+                    IDKategori,
+                    RequestBody.create(MediaType.parse("text/plain"),"")
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
