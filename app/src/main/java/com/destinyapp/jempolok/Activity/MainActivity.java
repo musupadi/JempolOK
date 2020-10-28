@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         spaceNavigationView.setCentreButtonSelectable(true);
         spaceNavigationView.addSpaceItem(new SpaceItem("Akun", R.drawable.ic_baseline_account_circle_24));
         spaceNavigationView.addSpaceItem(new SpaceItem("Setting", R.drawable.ic_baseline_settings_24));
+        Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
 
-        String externalUserId = "3"; // You will supply the external user id to the OneSignal SDK
+        String externalUserId = user; // You will supply the external user id to the OneSignal SDK
 
 // Setting External User Id with Callback Available in SDK Version 3.13.0+
         OneSignal.setExternalUserId(externalUserId, new OneSignal.OSExternalUserIdUpdateCompletionHandler() {

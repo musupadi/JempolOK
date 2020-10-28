@@ -2,6 +2,7 @@ package com.destinyapp.jempolok.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -102,6 +103,7 @@ public class AssignFinishActivity extends AppCompatActivity {
     String postBukti3= "";
     String postBukti4= "";
     Button upload,upload2,upload3,upload4,hapus,hapus2,hapus3,hapus4,submit;
+    Button Tambah1,Tambah2,Tambah3;
     //ONCLICK
     Boolean Gambar = false;
     Boolean Gambar2 = false;
@@ -109,6 +111,8 @@ public class AssignFinishActivity extends AppCompatActivity {
     Boolean Gambar4 = false;
     ImageView gambar,gambar2,gambar3,gambar4;
     TextView tvGambar,tvGambar2,tvGambar3,tvGambar4;
+    CardView card1,card2,card3,card4;
+    int u = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +124,9 @@ public class AssignFinishActivity extends AppCompatActivity {
         upload3 = findViewById(R.id.btnUpload3);
         upload4 = findViewById(R.id.btnUpload4);
         hapus = findViewById(R.id.btnHapusGambar);
+        hapus2 = findViewById(R.id.btnHapusGambar2);
+        hapus3 = findViewById(R.id.btnHapusGambar3);
+        hapus4 = findViewById(R.id.btnHapusGambar4);
         gambar = findViewById(R.id.ivGambar);
         gambar2 = findViewById(R.id.ivGambar2);
         gambar3 = findViewById(R.id.ivGambar3);
@@ -129,6 +136,12 @@ public class AssignFinishActivity extends AppCompatActivity {
         tvGambar3 = findViewById(R.id.tvGambar3);
         tvGambar4 = findViewById(R.id.tvGambar4);
         Submit = findViewById(R.id.btnSubmit);
+        Tambah1 = findViewById(R.id.btnTambah);
+        Tambah2 = findViewById(R.id.btnTambah2);
+        Tambah3 = findViewById(R.id.btnTambah3);
+        card2 = findViewById(R.id.cardUpload2);
+        card3 = findViewById(R.id.cardUpload3);
+        card4 = findViewById(R.id.cardUpload4);
         Intent intent = getIntent();
         dbHelper = new DB_Helper(AssignFinishActivity.this);
         Cursor cursor = dbHelper.checkUser();
@@ -145,53 +158,104 @@ public class AssignFinishActivity extends AppCompatActivity {
         }
         idReport = intent.getExtras().getString("id_report");
         method=new Musupadi();
+        Tambah1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                card2.setVisibility(View.VISIBLE);
+                u=2;
+                Tambah1.setVisibility(View.GONE);
+            }
+        });
+        hapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvGambar.setText("");
+                Gambar = false;
+                gambar.setVisibility(View.GONE);
+                tvGambar.setVisibility(View.GONE);
+            }
+        });
+        Tambah2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                card3.setVisibility(View.VISIBLE);
+                u=3;
+                Tambah2.setVisibility(View.GONE);
+            }
+        });
+        hapus2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                u=1;
+                tvGambar2.setText("");
+                Gambar2 = false;
+                gambar2.setVisibility(View.GONE);
+                tvGambar2.setVisibility(View.GONE);
+                card2.setVisibility(View.GONE);
+                Tambah1.setVisibility(View.VISIBLE);
+            }
+        });
+        Tambah3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                card4.setVisibility(View.VISIBLE);
+                u=4;
+                Tambah3.setVisibility(View.GONE);
+            }
+        });
+        hapus3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                u=2;
+                tvGambar3.setText("");
+                Gambar3 = false;
+                gambar3.setVisibility(View.GONE);
+                tvGambar3.setVisibility(View.GONE);
+                card3.setVisibility(View.GONE);
+                Tambah2.setVisibility(View.VISIBLE);
+            }
+        });
+        hapus4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                u=3;
+                tvGambar4.setText("");
+                Gambar4 = false;
+                gambar4.setVisibility(View.GONE);
+                tvGambar4.setVisibility(View.GONE);
+                card4.setVisibility(View.GONE);
+                Tambah3.setVisibility(View.VISIBLE);
+            }
+        });
         Logic();
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialDialog.Builder(AssignFinishActivity.this)
-                        .title("Pilih Gambar")
-                        .items(R.array.uploadImages)
-                        .itemsIds(R.array.itemIds)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                switch (which) {
-                                    case 0:
-                                        Gambar = true;
-                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
-                                        gambar.setVisibility(View.VISIBLE);
-                                        tvGambar.setVisibility(View.VISIBLE);
-                                        break;
-                                    case 1:
-                                        captureImage();
-                                        gambar.setVisibility(View.VISIBLE);
-                                        tvGambar.setVisibility(View.VISIBLE);
-                                        break;
-                                    case 2:
-                                        gambar.setImageResource(R.drawable.ic_launcher_background);
-                                        gambar.setVisibility(View.GONE);
-                                        tvGambar.setVisibility(View.GONE);
-                                        Gambar = false;
-                                        break;
-                                }
-                            }
-                        })
-                        .show();
+                UPLOAD("1");
+            }
+        });
+        upload2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UPLOAD("2");
+            }
+        });
+        upload3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UPLOAD("3");
+            }
+        });
+        upload4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UPLOAD("4");
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-        hapus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
         Submit.setOnClickListener(new View.OnClickListener() {
@@ -206,51 +270,311 @@ public class AssignFinishActivity extends AppCompatActivity {
                         REVIEW.add(cursors.getString(2));
                     }
                 }
-                final ProgressDialog pd = new ProgressDialog(AssignFinishActivity.this);
-                pd.setMessage("Sedang Menyimpan data ke Server");
-                pd.setCancelable(false);
-                pd.show();
-                File file = new File(postBukti);
-                RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
-                MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
-                ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-                Call<ResponseModel> Data = api.AssignSucces(
-                        method.AUTH(token),
-                        RequestBody.create(MediaType.parse("text/plain"),idReport),
-                        RequestBody.create(MediaType.parse("text/plain"),"2"),
-                        partPhoto,
-                        ID_TEKNISI,
-                        BINTANG,
-                        REVIEW);
-                Data.enqueue(new Callback<ResponseModel>() {
-                    @Override
-                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                        try {
-                            if (response.body().getStatusCode().equals("000")){
-                                Toast.makeText(AssignFinishActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
-                                pd.hide();
-                                Intent intent  = new Intent(AssignFinishActivity.this,MainActivity.class);
-                                startActivity(intent);
-                            }else if(response.body().getStatusCode().equals("002")){
-                                musupadi.Login(AssignFinishActivity.this,user,password);
-                                Toast.makeText(AssignFinishActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(AssignFinishActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
-                                pd.hide();
-                            }
-                        }catch (Exception e){
-                            Toast.makeText(AssignFinishActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
-                            pd.hide();
+                if (u == 1){
+                    final ProgressDialog pd = new ProgressDialog(AssignFinishActivity.this);
+                    pd.setMessage("Sedang Menyimpan data ke Server");
+                    pd.setCancelable(false);
+                    pd.show();
+                    File file = new File(postBukti);
+                    RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+                    MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
+                    ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                    Call<ResponseModel> Data = api.AssignSucces(
+                            method.AUTH(token),
+                            RequestBody.create(MediaType.parse("text/plain"),idReport),
+                            RequestBody.create(MediaType.parse("text/plain"),"2"),
+                            partPhoto,
+                            ID_TEKNISI,
+                            BINTANG,
+                            REVIEW);
+                    Data.enqueue(new Callback<ResponseModel>() {
+                        @Override
+                        public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                            RESPONSES(response.body().getStatusCode(),pd,response.body().getStatusMessage());
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseModel> call, Throwable t) {
-                        Toast.makeText(AssignFinishActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ResponseModel> call, Throwable t) {
+                            Toast.makeText(AssignFinishActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else if (u==2){
+                    final ProgressDialog pd = new ProgressDialog(AssignFinishActivity.this);
+                    pd.setMessage("Sedang Menyimpan data ke Server");
+                    pd.setCancelable(false);
+                    pd.show();
+                    File file = new File(postBukti);
+                    RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+                    MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
+
+                    File file2 = new File(postBukti2);
+                    RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                    MultipartBody.Part partPhoto2 = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody2);
+
+                    ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                    Call<ResponseModel> Data = api.AssignSucces(
+                            method.AUTH(token),
+                            RequestBody.create(MediaType.parse("text/plain"),idReport),
+                            RequestBody.create(MediaType.parse("text/plain"),"2"),
+                            partPhoto,
+                            partPhoto2,
+                            ID_TEKNISI,
+                            BINTANG,
+                            REVIEW);
+                    Data.enqueue(new Callback<ResponseModel>() {
+                        @Override
+                        public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                            RESPONSES(response.body().getStatusCode(),pd,response.body().getStatusMessage());
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseModel> call, Throwable t) {
+                            Toast.makeText(AssignFinishActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else if (u==3){
+                    final ProgressDialog pd = new ProgressDialog(AssignFinishActivity.this);
+                    pd.setMessage("Sedang Menyimpan data ke Server");
+                    pd.setCancelable(false);
+                    pd.show();
+
+                    File file = new File(postBukti);
+                    RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+                    MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
+
+                    File file2 = new File(postBukti2);
+                    RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                    MultipartBody.Part partPhoto2 = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody2);
+
+                    File file3 = new File(postBukti3);
+                    RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                    MultipartBody.Part partPhoto3 = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody3);
+
+                    ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                    Call<ResponseModel> Data = api.AssignSucces(
+                            method.AUTH(token),
+                            RequestBody.create(MediaType.parse("text/plain"),idReport),
+                            RequestBody.create(MediaType.parse("text/plain"),"2"),
+                            partPhoto,
+                            partPhoto2,
+                            partPhoto3,
+                            ID_TEKNISI,
+                            BINTANG,
+                            REVIEW);
+                    Data.enqueue(new Callback<ResponseModel>() {
+                        @Override
+                        public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                            RESPONSES(response.body().getStatusCode(),pd,response.body().getStatusMessage());
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseModel> call, Throwable t) {
+                            Toast.makeText(AssignFinishActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else if (u==4){
+                    final ProgressDialog pd = new ProgressDialog(AssignFinishActivity.this);
+                    pd.setMessage("Sedang Menyimpan data ke Server");
+                    pd.setCancelable(false);
+                    pd.show();
+
+                    File file = new File(postBukti);
+                    RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+                    MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
+
+                    File file2 = new File(postBukti2);
+                    RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                    MultipartBody.Part partPhoto2 = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody2);
+
+                    File file3 = new File(postBukti3);
+                    RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                    MultipartBody.Part partPhoto3 = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody3);
+
+                    File file4 = new File(postBukti4);
+                    RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                    MultipartBody.Part partPhoto4 = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody4);
+
+                    ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                    Call<ResponseModel> Data = api.AssignSucces(
+                            method.AUTH(token),
+                            RequestBody.create(MediaType.parse("text/plain"),idReport),
+                            RequestBody.create(MediaType.parse("text/plain"),"2"),
+                            partPhoto,
+                            partPhoto2,
+                            partPhoto3,
+                            partPhoto4,
+                            ID_TEKNISI,
+                            BINTANG,
+                            REVIEW);
+                    Data.enqueue(new Callback<ResponseModel>() {
+                        @Override
+                        public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                            RESPONSES(response.body().getStatusCode(),pd,response.body().getStatusMessage());
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseModel> call, Throwable t) {
+                            Toast.makeText(AssignFinishActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
+    }
+    private void RESPONSES(String Code,ProgressDialog pd,String Message){
+        try {
+            if (Code.equals("000")){
+                Toast.makeText(AssignFinishActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
+                pd.hide();
+                Intent intent  = new Intent(AssignFinishActivity.this,MainActivity.class);
+                startActivity(intent);
+            }else if(Code.equals("002")){
+                musupadi.Login(AssignFinishActivity.this,user,password);
+                Toast.makeText(AssignFinishActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(AssignFinishActivity.this, Message, Toast.LENGTH_SHORT).show();
+                pd.hide();
+            }
+        }catch (Exception e){
+            Toast.makeText(AssignFinishActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+            pd.hide();
+        }
+    }
+    private void UPLOAD(String U){
+        if (U.equals("1")){
+            new MaterialDialog.Builder(AssignFinishActivity.this)
+                    .title("Pilih Gambar")
+                    .items(R.array.uploadImages)
+                    .itemsIds(R.array.itemIds)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            switch (which) {
+                                case 0:
+                                    Gambar = true;
+                                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                    gambar.setVisibility(View.VISIBLE);
+                                    tvGambar.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    Gambar = true;
+                                    captureImage();
+                                    gambar.setVisibility(View.VISIBLE);
+                                    tvGambar.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    gambar.setImageResource(R.drawable.ic_launcher_background);
+                                    gambar.setVisibility(View.GONE);
+                                    tvGambar.setVisibility(View.GONE);
+                                    Gambar = false;
+                                    break;
+                            }
+                        }
+                    })
+                    .show();
+        }else if (U.equals("2")){
+            new MaterialDialog.Builder(AssignFinishActivity.this)
+                    .title("Pilih Gambar")
+                    .items(R.array.uploadImages)
+                    .itemsIds(R.array.itemIds)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            switch (which) {
+                                case 0:
+                                    Gambar2 = true;
+                                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                    gambar2.setVisibility(View.VISIBLE);
+                                    tvGambar2.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    Gambar2 = true;
+                                    captureImage();
+                                    gambar2.setVisibility(View.VISIBLE);
+                                    tvGambar2.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    gambar2.setImageResource(R.drawable.ic_launcher_background);
+                                    gambar2.setVisibility(View.GONE);
+                                    tvGambar2.setVisibility(View.GONE);
+                                    Gambar2 = false;
+                                    break;
+                            }
+                        }
+                    })
+                    .show();
+        }else if (U.equals("3")){
+            new MaterialDialog.Builder(AssignFinishActivity.this)
+                    .title("Pilih Gambar")
+                    .items(R.array.uploadImages)
+                    .itemsIds(R.array.itemIds)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            switch (which) {
+                                case 0:
+                                    Gambar3 = true;
+                                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                    gambar3.setVisibility(View.VISIBLE);
+                                    tvGambar3.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    Gambar3 = true;
+                                    captureImage();
+                                    gambar3.setVisibility(View.VISIBLE);
+                                    tvGambar3.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    gambar3.setImageResource(R.drawable.ic_launcher_background);
+                                    gambar3.setVisibility(View.GONE);
+                                    tvGambar3.setVisibility(View.GONE);
+                                    Gambar3 = false;
+                                    break;
+                            }
+                        }
+                    })
+                    .show();
+        }else if (U.equals("4")){
+            new MaterialDialog.Builder(AssignFinishActivity.this)
+                    .title("Pilih Gambar")
+                    .items(R.array.uploadImages)
+                    .itemsIds(R.array.itemIds)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            switch (which) {
+                                case 0:
+                                    Gambar4 = true;
+                                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                    gambar4.setVisibility(View.VISIBLE);
+                                    tvGambar4.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    Gambar4 = true;
+                                    captureImage();
+                                    gambar4.setVisibility(View.VISIBLE);
+                                    tvGambar4.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    gambar4.setImageResource(R.drawable.ic_launcher_background);
+                                    gambar4.setVisibility(View.GONE);
+                                    tvGambar4.setVisibility(View.GONE);
+                                    Gambar4 = false;
+                                    break;
+                            }
+                        }
+                    })
+                    .show();
+        }
+
     }
     private void Logic(){
         mManager = new LinearLayoutManager(AssignFinishActivity.this,LinearLayoutManager.VERTICAL,false);
@@ -453,11 +777,59 @@ public class AssignFinishActivity extends AppCompatActivity {
                 Glide.with(this).load(fileUri).into(gambar);
                 postBukti = fileUri.getPath();
             }
-            String filename=postBukti.substring(postBukti.lastIndexOf("/")+1);
-            gambar.setVisibility(View.VISIBLE);
-            tvGambar.setVisibility(View.VISIBLE);
-            tvGambar.setText(filename);
-            Gambar=false;
+            if(Gambar){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar);
+                    postBukti = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar);
+                    postBukti = fileUri.getPath();
+                }
+                String filename=postBukti.substring(postBukti.lastIndexOf("/")+1);
+                gambar.setVisibility(View.VISIBLE);
+                tvGambar.setVisibility(View.VISIBLE);
+                tvGambar.setText(filename);
+                Gambar=false;
+            }else if(Gambar2){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar2);
+                    postBukti2 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar2);
+                    postBukti2 = fileUri.getPath();
+                }
+                String filename=postBukti.substring(postBukti2.lastIndexOf("/")+1);
+                gambar2.setVisibility(View.VISIBLE);
+                tvGambar2.setVisibility(View.VISIBLE);
+                tvGambar2.setText(filename);
+                Gambar2=false;
+            }else if(Gambar3){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar3);
+                    postBukti3 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar3);
+                    postBukti3 = fileUri.getPath();
+                }
+                String filename=postBukti3.substring(postBukti3.lastIndexOf("/")+1);
+                gambar3.setVisibility(View.VISIBLE);
+                tvGambar3.setVisibility(View.VISIBLE);
+                tvGambar3.setText(filename);
+                Gambar3=false;
+            }else if(Gambar4){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar4);
+                    postBukti4 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar4);
+                    postBukti4 = fileUri.getPath();
+                }
+                String filename=postBukti4.substring(postBukti4.lastIndexOf("/")+1);
+                gambar4.setVisibility(View.VISIBLE);
+                tvGambar4.setVisibility(View.VISIBLE);
+                tvGambar4.setText(filename);
+                Gambar=false;
+            }
         }
     }
 }

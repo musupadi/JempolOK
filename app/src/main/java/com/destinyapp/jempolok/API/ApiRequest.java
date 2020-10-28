@@ -52,9 +52,10 @@ public interface ApiRequest {
                                  @Part("detailLokasi") RequestBody detailLokasi,
                                  @Part("kecamatanReport") RequestBody kecamatanReport,
                                  @Part("tanggalReport") RequestBody tanggalReport,
-                                 @Part("alasanReject") RequestBody alasanReject,
+                                 @Part("alasanReport") RequestBody alasanReport,
                                  @Query("kegiatan[]") ArrayList<String> kegiatan,
-                                 @Query("kategori[]") ArrayList<String> kategori);
+                                 @Query("kategori[]") ArrayList<String> kategori,
+                                 @Part("alasanReject") RequestBody alasanReject);
 
     @Multipart
     @POST("report")
@@ -69,9 +70,10 @@ public interface ApiRequest {
                                  @Part("detailLokasi") RequestBody detailLokasi,
                                  @Part("kecamatanReport") RequestBody kecamatanReport,
                                  @Part("tanggalReport") RequestBody tanggalReport,
-                                 @Part("alasanReject") RequestBody alasanReject,
+                                 @Part("alasanReport") RequestBody alasanReport,
                                  @Query("kegiatan[]") ArrayList<String> kegiatan,
-                                 @Query("kategori[]") ArrayList<String> kategori);
+                                 @Query("kategori[]") ArrayList<String> kategori,
+                                 @Part("alasanReject") RequestBody alasanReject);
 
     @Multipart
     @POST("report")
@@ -87,9 +89,10 @@ public interface ApiRequest {
                                  @Part("detailLokasi") RequestBody detailLokasi,
                                  @Part("kecamatanReport") RequestBody kecamatanReport,
                                  @Part("tanggalReport") RequestBody tanggalReport,
-                                 @Part("alasanReject") RequestBody alasanReject,
+                                 @Part("alasanReport") RequestBody alasanReport,
                                  @Query("kegiatan[]") ArrayList<String> kegiatan,
-                                 @Query("kategori[]") ArrayList<String> kategori);
+                                 @Query("kategori[]") ArrayList<String> kategori,
+                                 @Part("alasanReject") RequestBody alasanReject);
 
     @FormUrlEncoded
     @POST("report_assign")
@@ -104,6 +107,42 @@ public interface ApiRequest {
                                      @Part("idReport") RequestBody idReport,
                                      @Part("statusReport") RequestBody statusReport,
                                      @Part MultipartBody.Part photo,
+                                     @Query("idTeknisi[]") ArrayList<String> idTeknisi,
+                                     @Query("scoreId[]") ArrayList<String> scoreId,
+                                     @Query("isiReview[]") ArrayList<String> isiReview);
+
+    @Multipart
+    @POST("report_assign")
+    Call<ResponseModel> AssignSucces(@Header("Authorization") String authHeader,
+                                     @Part("idReport") RequestBody idReport,
+                                     @Part("statusReport") RequestBody statusReport,
+                                     @Part MultipartBody.Part photo,
+                                     @Part MultipartBody.Part photo2,
+                                     @Query("idTeknisi[]") ArrayList<String> idTeknisi,
+                                     @Query("scoreId[]") ArrayList<String> scoreId,
+                                     @Query("isiReview[]") ArrayList<String> isiReview);
+
+    @Multipart
+    @POST("report_assign")
+    Call<ResponseModel> AssignSucces(@Header("Authorization") String authHeader,
+                                     @Part("idReport") RequestBody idReport,
+                                     @Part("statusReport") RequestBody statusReport,
+                                     @Part MultipartBody.Part photo,
+                                     @Part MultipartBody.Part photo2,
+                                     @Part MultipartBody.Part photo3,
+                                     @Query("idTeknisi[]") ArrayList<String> idTeknisi,
+                                     @Query("scoreId[]") ArrayList<String> scoreId,
+                                     @Query("isiReview[]") ArrayList<String> isiReview);
+
+    @Multipart
+    @POST("report_assign")
+    Call<ResponseModel> AssignSucces(@Header("Authorization") String authHeader,
+                                     @Part("idReport") RequestBody idReport,
+                                     @Part("statusReport") RequestBody statusReport,
+                                     @Part MultipartBody.Part photo,
+                                     @Part MultipartBody.Part photo2,
+                                     @Part MultipartBody.Part photo3,
+                                     @Part MultipartBody.Part photo4,
                                      @Query("idTeknisi[]") ArrayList<String> idTeknisi,
                                      @Query("scoreId[]") ArrayList<String> scoreId,
                                      @Query("isiReview[]") ArrayList<String> isiReview);

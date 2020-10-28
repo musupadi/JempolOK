@@ -309,17 +309,6 @@
                                 <Button
                                     android:textSize="10sp"
                                     android:layout_weight="1"
-                                    android:id="@+id/btnTambah4"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Tambah Gambar"
-                                    android:background="@drawable/btn_rounded_primary"
-                                    android:textColor="@color/colorWhite"
-                                    android:fontFamily="@font/roboto"
-                                    android:layout_marginRight="5dp"/>
-                                <Button
-                                    android:textSize="10sp"
-                                    android:layout_weight="1"
                                     android:id="@+id/btnHapusGambar4"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"

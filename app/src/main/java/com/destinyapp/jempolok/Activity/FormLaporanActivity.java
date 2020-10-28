@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
@@ -117,10 +119,14 @@ public class FormLaporanActivity extends AppCompatActivity {
     private AdapterSpinnerKategori aKategori;
     private AdapterSpinnerKegiatan aKegiatan;
     String idKategori,idKegiatan;
+    LinearLayout linearFront;
+    LottieAnimationView lottie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_laporan);
+        linearFront = findViewById(R.id.linearFront);
+        lottie = findViewById(R.id.lottieFiles);
         spKategori = findViewById(R.id.spKategori);
         spKegiatan = findViewById(R.id.spKegiatan);
         TambahKategori = findViewById(R.id.btnTambahKategori);
@@ -283,6 +289,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                                         tvGambar2.setVisibility(View.VISIBLE);
                                         break;
                                     case 1:
+                                        Gambar2 = true;
                                         captureImage();
                                         gambar2.setVisibility(View.VISIBLE);
                                         tvGambar2.setVisibility(View.VISIBLE);
@@ -316,9 +323,10 @@ public class FormLaporanActivity extends AppCompatActivity {
                                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                         startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
                                         gambar3.setVisibility(View.VISIBLE);
-                                        tvGambar4.setVisibility(View.VISIBLE);
+                                        tvGambar3.setVisibility(View.VISIBLE);
                                         break;
                                     case 1:
+                                        Gambar3 = true;
                                         captureImage();
                                         gambar3.setVisibility(View.VISIBLE);
                                         tvGambar3.setVisibility(View.VISIBLE);
@@ -355,6 +363,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                                         tvGambar4.setVisibility(View.VISIBLE);
                                         break;
                                     case 1:
+                                        Gambar4 = true;
                                         captureImage();
                                         gambar4.setVisibility(View.VISIBLE);
                                         tvGambar4.setVisibility(View.VISIBLE);
@@ -404,6 +413,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                                         tvGambar.setVisibility(View.VISIBLE);
                                         break;
                                     case 1:
+                                        Gambar = true;
                                         captureImage();
                                         gambar.setVisibility(View.VISIBLE);
                                         tvGambar.setVisibility(View.VISIBLE);
@@ -465,9 +475,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                     IDKegiatan.add(cursor.getString(0));
                 }
             }
-            if (IDKegiatan.size() < 1){
-                Toast.makeText(this, "Harap pilih Kegiatan", Toast.LENGTH_SHORT).show();
-            }else if(IDKategori.size() <1){
+            else if(IDKategori.size() <1){
                 Toast.makeText(this, "Harap pilih Kategori", Toast.LENGTH_SHORT).show();
             }else{
                 Logic();
@@ -522,24 +530,7 @@ public class FormLaporanActivity extends AppCompatActivity {
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                    try {
-                        if (response.body().getStatusCode().equals("000")){
-                            Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
-                            Login(pd);
-                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                        }
-                    }catch (Exception e){
-                        Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
-                        pd.hide();
-                    }
-
+                    GetData(response.body().getStatusCode(),pd,response.body().getStatusMessage());
                 }
 
                 @Override
@@ -562,36 +553,20 @@ public class FormLaporanActivity extends AppCompatActivity {
                     partPhoto,
                     partPhoto2,
                     RequestBody.create(MediaType.parse("text/plain"),Deskripsi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),Kegiatan.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),Lokasi.getSelectedItem().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
                     RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
                     IDKegiatan,
-                    IDKategori
+                    IDKategori,
+                    RequestBody.create(MediaType.parse("text/plain"),"")
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                    try {
-                        if (response.body().getStatusCode().equals("000")){
-                            Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }else if(response.body().getStatusCode().equals("002")){
-                            Login(pd);
-                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                        }
-                    }catch (Exception e){
-                        Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
-                        pd.hide();
-                    }
-
+                    GetData(response.body().getStatusCode(),pd,response.body().getStatusMessage());
                 }
 
                 @Override
@@ -620,36 +595,20 @@ public class FormLaporanActivity extends AppCompatActivity {
                     partPhoto2,
                     partPhoto3,
                     RequestBody.create(MediaType.parse("text/plain"),Deskripsi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),Kegiatan.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),Lokasi.getSelectedItem().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
                     RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
                     IDKegiatan,
-                    IDKategori
+                    IDKategori,
+                    RequestBody.create(MediaType.parse("text/plain"),"")
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                    try {
-                        if (response.body().getStatusCode().equals("000")){
-                            Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }else if(response.body().getStatusCode().equals("002")){
-                            Login(pd);
-                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                        }
-                    }catch (Exception e){
-                        Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
-                        pd.hide();
-                    }
-
+                    GetData(response.body().getStatusCode(),pd,response.body().getStatusMessage());
                 }
 
                 @Override
@@ -683,36 +642,20 @@ public class FormLaporanActivity extends AppCompatActivity {
                     partPhoto3,
                     partPhoto4,
                     RequestBody.create(MediaType.parse("text/plain"),Deskripsi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),Kegiatan.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),Lokasi.getSelectedItem().toString()),
                     RequestBody.create(MediaType.parse("text/plain"),DetailLokasi.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"),String.valueOf(Kecamatan.getSelectedItemId()+1)),
+                    RequestBody.create(MediaType.parse("text/plain"),""),
                     RequestBody.create(MediaType.parse("text/plain"),dateFormat.format(date)),
                     RequestBody.create(MediaType.parse("text/plain"),Alasan.getText().toString()),
                     IDKegiatan,
-                    IDKategori
+                    IDKategori,
+                    RequestBody.create(MediaType.parse("text/plain"),"")
             );
             Data.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                    try {
-                        if (response.body().getStatusCode().equals("000")){
-                            Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                            Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }else if(response.body().getStatusCode().equals("002")){
-                            Login(pd);
-                            Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(FormLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
-                            pd.hide();
-                        }
-                    }catch (Exception e){
-                        Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
-                        pd.hide();
-                    }
-
+                    GetData(response.body().getStatusCode(),pd,response.body().getStatusMessage());
                 }
 
                 @Override
@@ -723,6 +666,50 @@ public class FormLaporanActivity extends AppCompatActivity {
             });
         }
 //        Call<ResponseModel> Upload = api.UploadBukti()
+    }
+    private void GetData(String code,ProgressDialog pd,String message){
+        try {
+            if (code.equals("000")){
+                Toast.makeText(FormLaporanActivity.this, "Data Berhasil Di input", Toast.LENGTH_SHORT).show();
+                pd.hide();
+                linearFront.setAlpha(0.1f);
+                lottie.setVisibility(View.VISIBLE);
+                lottie.playAnimation();
+                lottie.addAnimatorListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+                        Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+                        Intent intent  = new Intent(FormLaporanActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }else if(code.equals("002") || code.equals("001")){
+                Login(pd);
+                Toast.makeText(FormLaporanActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(FormLaporanActivity.this, message, Toast.LENGTH_SHORT).show();
+                pd.hide();
+            }
+        }catch (Exception e){
+            Toast.makeText(FormLaporanActivity.this, "Terjadi kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+            pd.hide();
+        }
     }
     private void getKategori(){
         musupadi = new Musupadi();
@@ -975,18 +962,59 @@ public class FormLaporanActivity extends AppCompatActivity {
                 }
             }
         }else if (requestCode == CAMERA_PIC_REQUEST){
-            if (Build.VERSION.SDK_INT > 21) {
-                Glide.with(this).load(mImageFileLocation).into(gambar);
-                postBukti = mImageFileLocation;
-            }else{
-                Glide.with(this).load(fileUri).into(gambar);
-                postBukti = fileUri.getPath();
+            if(Gambar){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar);
+                    postBukti = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar);
+                    postBukti = fileUri.getPath();
+                }
+                String filename=postBukti.substring(postBukti.lastIndexOf("/")+1);
+                gambar.setVisibility(View.VISIBLE);
+                tvGambar.setVisibility(View.VISIBLE);
+                tvGambar.setText(filename);
+                Gambar=false;
+            }else if(Gambar2){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar2);
+                    postBukti2 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar2);
+                    postBukti2 = fileUri.getPath();
+                }
+                String filename=postBukti.substring(postBukti2.lastIndexOf("/")+1);
+                gambar2.setVisibility(View.VISIBLE);
+                tvGambar2.setVisibility(View.VISIBLE);
+                tvGambar2.setText(filename);
+                Gambar2=false;
+            }else if(Gambar3){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar3);
+                    postBukti3 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar3);
+                    postBukti3 = fileUri.getPath();
+                }
+                String filename=postBukti3.substring(postBukti3.lastIndexOf("/")+1);
+                gambar3.setVisibility(View.VISIBLE);
+                tvGambar3.setVisibility(View.VISIBLE);
+                tvGambar3.setText(filename);
+                Gambar3=false;
+            }else if(Gambar4){
+                if (Build.VERSION.SDK_INT > 21) {
+                    Glide.with(this).load(mImageFileLocation).into(gambar4);
+                    postBukti4 = mImageFileLocation;
+                }else{
+                    Glide.with(this).load(fileUri).into(gambar4);
+                    postBukti4 = fileUri.getPath();
+                }
+                String filename=postBukti4.substring(postBukti4.lastIndexOf("/")+1);
+                gambar4.setVisibility(View.VISIBLE);
+                tvGambar4.setVisibility(View.VISIBLE);
+                tvGambar4.setText(filename);
+                Gambar=false;
             }
-            String filename=postBukti.substring(postBukti.lastIndexOf("/")+1);
-            gambar.setVisibility(View.VISIBLE);
-            tvGambar.setVisibility(View.VISIBLE);
-            tvGambar.setText(filename);
-            Gambar=false;
         }
     }
 }

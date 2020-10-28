@@ -122,6 +122,10 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
                 status = cursor.getString(6);
             }
         }
+        String URL = method.BASE_URL();
+        Glide.with(ctx)
+                .load(URL+"/"+dm.getGambar())
+                .into(holderData.gambar);
         if (level.equals("pelaksana")){
             holderData.LayoutCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -130,11 +134,14 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
                         dbHelper.resetAssign();
                         Intent intent = new Intent(ctx, AssignFinishActivity.class);
                         intent.putExtra( "id_report", dm.getId_report());
+                        holderData.gambar.setVisibility(View.GONE);
                         ctx.startActivity(intent);
                     }else if (dm.getStatus_report().equals("progress 3")){
                         Toast.makeText(ctx, "Laporan Sudah Selesai Menunggu Penilaian Admin", Toast.LENGTH_SHORT).show();
                     }else if(dm.getStatus_report().equals("selesai")){
                         Toast.makeText(ctx, "Laporan Sudah Selesai", Toast.LENGTH_SHORT).show();
+                    }else if(dm.getStatus_report().equals("pending 1")){
+                        Toast.makeText(ctx, "Laporan Sedang Pending", Toast.LENGTH_SHORT).show();
                     }else{
                         Logic(idReport);
                     }
@@ -143,24 +150,21 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
         }
         holderData.Laporan.setText(dm.getNama_report());
         holderData.DetailLaporan.setText(dm.getDeskripsi_report());
-        holderData.Kegiatan.setText(dm.getKegiatan_pemeliharaan());
         holderData.Lokasi.setText(dm.getLokasi());
         holderData.Kecamatan.setText(dm.getKecamatan_report());
         holderData.DetailLokasi.setText(dm.getDetail_lokasi());
-        String URL = method.BASE_URL();
-        Glide.with(ctx)
-                .load(URL+"/"+dm.getGambar())
-                .into(holderData.gambar);
         if (dm.getStatus_report().equals("progress 1")){
             holderData.Status.setText("On Progress - 1");
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_yellow);
             holderData.tvStatus.setVisibility(View.VISIBLE);
             holderData.ivStatus.setVisibility(View.GONE);
+            holderData.gambar.setVisibility(View.GONE);
         }else if(dm.getStatus_report().equals("progress 2")){
             holderData.Status.setText("On Progress - 2");
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_yellow);
             holderData.tvStatus.setVisibility(View.GONE);
             holderData.ivStatus.setVisibility(View.GONE);
+            holderData.gambar.setVisibility(View.GONE);
         }else if(dm.getStatus_report().equals("progress 3")){
             holderData.Status.setText("On Progress - 3");
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_yellow);
@@ -171,6 +175,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_red);
             holderData.tvStatus.setVisibility(View.GONE);
             holderData.ivStatus.setVisibility(View.GONE);
+            holderData.gambar.setVisibility(View.GONE);
         }else if(dm.getStatus_report().equals("reject")){
             holderData.Status.setText("Reject");
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_black);
@@ -182,7 +187,6 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             holderData.tvStatus.setVisibility(View.GONE);
             holderData.ivStatus.setVisibility(View.GONE);
         }
-//        holderData.Status.setText(dm.getStatus_report());
         holderData.dm=dm;
     }
 
