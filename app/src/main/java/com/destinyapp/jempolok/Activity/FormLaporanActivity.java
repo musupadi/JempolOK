@@ -121,6 +121,8 @@ public class FormLaporanActivity extends AppCompatActivity {
     String idKategori,idKegiatan;
     LinearLayout linearFront;
     LottieAnimationView lottie;
+    Button hapus,hapus2,hapus3,hapus4;
+    CardView card1,card2,card3,card4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +164,10 @@ public class FormLaporanActivity extends AppCompatActivity {
         Tambah = findViewById(R.id.btnTambah);
         Tambah2 = findViewById(R.id.btnTambah2);
         Tambah3 = findViewById(R.id.btnTambah3);
+        hapus = findViewById(R.id.btnHapusGambar);
+        hapus2 = findViewById(R.id.btnHapusGambar2);
+        hapus3 = findViewById(R.id.btnHapusGambar3);
+        hapus4 = findViewById(R.id.btnHapusGambar4);
         LinearUpload2 = findViewById(R.id.linearUpload2);
         LinearUpload3 = findViewById(R.id.linearUpload3);
         LinearUpload4 = findViewById(R.id.linearUpload4);
@@ -267,6 +273,51 @@ public class FormLaporanActivity extends AppCompatActivity {
                 LinearUpload4.setVisibility(View.VISIBLE);
                 u=4;
                 Tambah3.setVisibility(View.GONE);
+            }
+        });
+        hapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvGambar.setText("");
+                Gambar = false;
+                gambar.setVisibility(View.GONE);
+                tvGambar.setVisibility(View.GONE);
+            }
+        });
+        hapus2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                u=1;
+                tvGambar2.setText("");
+                Gambar2 = false;
+                gambar2.setVisibility(View.GONE);
+                tvGambar2.setVisibility(View.GONE);
+                LinearUpload2.setVisibility(View.GONE);
+                Tambah.setVisibility(View.VISIBLE);
+            }
+        });
+        hapus3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                u=2;
+                tvGambar3.setText("");
+                Gambar3 = false;
+                gambar3.setVisibility(View.GONE);
+                tvGambar3.setVisibility(View.GONE);
+                LinearUpload3.setVisibility(View.GONE);
+                Tambah2.setVisibility(View.VISIBLE);
+            }
+        });
+        hapus4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                u=3;
+                tvGambar4.setText("");
+                Gambar4 = false;
+                gambar4.setVisibility(View.GONE);
+                tvGambar4.setVisibility(View.GONE);
+                LinearUpload4.setVisibility(View.GONE);
+                Tambah3.setVisibility(View.VISIBLE);
             }
         });
         upload2.setOnClickListener(new View.OnClickListener() {

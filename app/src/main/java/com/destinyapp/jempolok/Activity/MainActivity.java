@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         spaceNavigationView.setCentreButtonSelectable(true);
         spaceNavigationView.addSpaceItem(new SpaceItem("Akun", R.drawable.ic_baseline_account_circle_24));
         spaceNavigationView.addSpaceItem(new SpaceItem("Setting", R.drawable.ic_baseline_settings_24));
-        Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
