@@ -34,13 +34,6 @@
                                 android:id="@+id/ivHeader"
                                 android:src="@drawable/night"
                                 android:scaleType="fitXY"/>
-                            <!--                        <com.airbnb.lottie.LottieAnimationView-->
-                            <!--                            app:lottie_loop="true"-->
-                            <!--                            app:lottie_fileName="welcome.json"-->
-                            <!--                            app:lottie_autoPlay="true"-->
-                            <!--                            android:layout_width="match_parent"-->
-                            <!--                            android:layout_height="match_parent">-->
-                            <!--                        </com.airbnb.lottie.LottieAnimationView>-->
                             <TextView
                                 android:layout_above="@+id/tvTgl"
                                 android:layout_marginLeft="5dp"

@@ -19,6 +19,7 @@ import com.destinyapp.jempolok.API.ApiRequest;
 import com.destinyapp.jempolok.API.RetroServer;
 import com.destinyapp.jempolok.Activity.LoginActivity;
 import com.destinyapp.jempolok.Activity.MainActivity;
+import com.destinyapp.jempolok.Activity.SaranActivity;
 import com.destinyapp.jempolok.Model.ResponseModel;
 import com.destinyapp.jempolok.R;
 import com.destinyapp.jempolok.Services;
@@ -31,7 +32,7 @@ import retrofit2.Response;
 public class SettingFragment extends Fragment {
 
 
-    Button logout;
+    Button logout,saran;
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -51,6 +52,7 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         logout = view.findViewById(R.id.btnLogout);
+        saran = view.findViewById(R.id.btnSaran);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +81,14 @@ public class SettingFragment extends Fragment {
                         .setIcon(R.drawable.ic_baseline_close_24_red);
                 AlertDialog alert = builder.create();
                 alert.show();
-
+            }
+        });
+        saran.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SaranActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
     }

@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Kontak Kami"
+            android:visibility="gone"
             android:id="@+id/btnContact"
             android:textColor="@color/colorWhite"
             android:background="@drawable/btn_rounded_primary"/>

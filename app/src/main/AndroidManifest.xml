@@ -15,20 +15,24 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:name=".App"
-        android:persistent="true"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/icon_temporary"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:persistent="true"
         android:roundIcon="@mipmap/icon_temporary"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.AssignFinishActivity"
-            android:theme="@style/AppThemeNoAction"></activity>
+        <activity android:name=".Activity.SaranActivity"></activity>
+        <activity android:name=".Activity.ForgotPasswordActivity" />
+        <activity
+            android:name=".Activity.AssignFinishActivity"
+            android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".Activity.CheckLaporanActivity"
             android:theme="@style/AppThemeNoAction" />
@@ -54,8 +58,6 @@
             </intent-filter>
         </activity>
 
-
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -65,8 +67,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-
     </application>
 
 </manifest>
