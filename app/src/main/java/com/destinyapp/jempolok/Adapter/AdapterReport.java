@@ -181,6 +181,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_black);
             holderData.tvStatus.setVisibility(View.GONE);
             holderData.ivStatus.setVisibility(View.GONE);
+            holderData.gambar.setVisibility(View.GONE);
         }else if(dm.getStatus_report().equals("selesai")){
             holderData.Status.setText("Selesai");
             holderData.LinearBGStatus.setBackgroundResource(R.drawable.round_background_green);

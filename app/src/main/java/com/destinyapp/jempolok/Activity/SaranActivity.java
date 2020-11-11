@@ -1,10 +1,14 @@
 package com.destinyapp.jempolok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +33,11 @@ public class SaranActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setClipboard(SaranActivity.this,"0254223788");
-                Toast.makeText(SaranActivity.this, "Nomor Tercopy", Toast.LENGTH_SHORT).show();
+                Uri number = Uri.parse("tel:0254223788");
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+                startActivity(callIntent);
+//                setClipboard(SaranActivity.this,"0254223788");
+//                Toast.makeText(SaranActivity.this, "Nomor Tercopy", Toast.LENGTH_SHORT).show();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
