@@ -15,11 +15,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_fileName="like.json"
+                app:lottie_autoPlay="true"
+                android:id="@+id/lottie"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"/>
             <ImageView
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/jempol"/>
+                android:src="@drawable/jempol"
+                android:visibility="gone"/>
             <TextView
                 android:layout_weight="2"
                 android:layout_width="match_parent"
