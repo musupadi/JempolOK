@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.destinyapp.jempolok.API.ApiRequest;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     Musupadi musupadi = new Musupadi();
     DB_Helper dbHelper = new DB_Helper(this);
     LinearLayout available,loading;
+    TextView forgotPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +39,16 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.btnLogin);
         user = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
+        forgotPassword = findViewById(R.id.tvForgotPassword);
         available = findViewById(R.id.linearAvailable);
         loading = findViewById(R.id.linearLoading);
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

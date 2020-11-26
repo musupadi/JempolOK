@@ -28,10 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.EditProfileActivity"></activity>
-        <activity android:name=".Activity.SaranActivity"
+        <activity android:name=".Activity.EditProfileActivity" />
+        <activity
+            android:name=".Activity.SaranActivity"
+            android:theme="@style/AppThemeNoAction" />
+        <activity
+            android:name=".Activity.ForgotPasswordActivity"
             android:theme="@style/AppThemeNoAction"/>
-        <activity android:name=".Activity.ForgotPasswordActivity" />
         <activity
             android:name=".Activity.AssignFinishActivity"
             android:theme="@style/AppThemeNoAction" />

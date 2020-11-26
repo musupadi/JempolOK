@@ -24,6 +24,33 @@ public interface ApiRequest {
     Call<ResponseModel> login(@Field("username") String username,
                             @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("testmail")
+    Call<ResponseModel> VerifikasiMail(@Field("emailTaget") String emailTaget);
+
+    @FormUrlEncoded
+    @POST("changepassword")
+    Call<ResponseModel> ChangePassword(@Field("email") String email,
+                                       @Field("token") String token,
+                                       @Field("email") String newPassword,
+                                       @Field("email") String confirmPassword);
+
+    @FormUrlEncoded
+    @POST("changepasswordonlogin")
+    Call<ResponseModel> ChangePasswordLogin(@Header("Authorization") String authHeader,
+                                            @Field("lastPassword") String lastPassword,
+                                            @Field("newPassword") String newPassword,
+                                            @Field("confirmPassword") String confirmPassword);
+
+    @Multipart
+    @POST("profil")
+    Call<ResponseModel> ChangeProfile(@Header("Authorization") String authHeader,
+                                @Part("namaUser") RequestBody namaUser,
+                                @Part MultipartBody.Part fotoUser);
+
+
+
+
     @Multipart
     @POST("report")
     Call<ResponseModel> Laporan(@Header("Authorization") String authHeader,

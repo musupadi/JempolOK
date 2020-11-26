@@ -65,6 +65,7 @@
                         android:fontFamily="@font/roboto"
                         android:id="@+id/tvLevel"/>
                     <Button
+                        android:id="@+id/btnEditProfile"
                         android:layout_marginTop="30dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -73,6 +74,7 @@
                         android:textColor="@color/colorWhite"
                         android:fontFamily="@font/roboto"/>
                     <Button
+                        android:id="@+id/btnChangePassword"
                         android:layout_marginTop="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
