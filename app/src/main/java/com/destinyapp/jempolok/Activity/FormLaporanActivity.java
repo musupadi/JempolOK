@@ -1034,7 +1034,7 @@ public class FormLaporanActivity extends AppCompatActivity {
                     Glide.with(this).load(fileUri).into(gambar2);
                     postBukti2 = fileUri.getPath();
                 }
-                String filename=postBukti.substring(postBukti2.lastIndexOf("/")+1);
+                String filename=postBukti2.substring(postBukti2.lastIndexOf("/")+1);
                 gambar2.setVisibility(View.VISIBLE);
                 tvGambar2.setVisibility(View.VISIBLE);
                 tvGambar2.setText(filename);

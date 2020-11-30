@@ -34,6 +34,7 @@ import com.destinyapp.jempolok.Activity.ForgotPasswordActivity;
 import com.destinyapp.jempolok.Activity.FormLaporanActivity;
 import com.destinyapp.jempolok.Activity.HomeActivity;
 import com.destinyapp.jempolok.Activity.LoginActivity;
+import com.destinyapp.jempolok.Activity.MainActivity;
 import com.destinyapp.jempolok.BuildConfig;
 import com.destinyapp.jempolok.Model.Musupadi;
 import com.destinyapp.jempolok.Model.ResponseModel;
@@ -232,6 +233,10 @@ public class UserFragment extends Fragment {
                     pd.hide();
                     if (response.body().getStatusMessage().equals("Success")){
                         DialogChange.hide();
+                        musupadi.Login(getActivity(),user,password);
+                        Toast.makeText(getActivity(), "Data User berhasil diubah", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
                     }
                     Toast.makeText(getActivity(), response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                 }catch (Exception e){

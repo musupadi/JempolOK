@@ -594,6 +594,9 @@ public class AssignFinishActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                 }else if(response.body().getStatusCode().equals("002")){
                     method.Login(AssignFinishActivity.this,user,password);
+                    Intent intent = new Intent(AssignFinishActivity.this,AssignFinishActivity.class);
+                    startActivity(intent);
+                    finish();
                 }else{
                     Toast.makeText(AssignFinishActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                 }

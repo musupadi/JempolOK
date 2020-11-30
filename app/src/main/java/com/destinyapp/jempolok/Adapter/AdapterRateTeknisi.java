@@ -61,7 +61,7 @@ public class AdapterRateTeknisi extends RecyclerView.Adapter<AdapterRateTeknisi.
         dbHelper=new DB_Helper(ctx);
         musupadi = new Musupadi();
         final Animation animation = AnimationUtils.loadAnimation(ctx,R.anim.fadeout);
-        holderData.Nama.setText(dm.id_teknisi);
+        holderData.Nama.setText(dm.nama_teknisi);
         Cursor cursors = dbHelper.checkAssign();
         if (cursors.getCount()>0){
             while (cursors.moveToNext()){

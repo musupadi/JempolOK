@@ -116,7 +116,8 @@ public class CheckLaporanActivity extends AppCompatActivity {
                         loading.setVisibility(View.GONE);
                     }else if(response.body().getStatusCode().equals("002") || response.body().getStatusCode().equals("001")){
                         musupadi.Login(CheckLaporanActivity.this,user,password);
-                        Logic();
+                        Intent intent = new Intent(CheckLaporanActivity.this,CheckLaporanActivity.class);
+                        startActivity(intent);
                     }else{
                         Toast.makeText(CheckLaporanActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                         loading.setVisibility(View.GONE);
