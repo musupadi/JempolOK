@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroServer {
-    private static final String base_url = "http://apijempol.destinyconsultant.tech/";
+    private static final String base_url = "https://api-jempol.jempolok.com/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient(){

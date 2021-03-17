@@ -31,7 +31,7 @@ import retrofit2.Response;
 
 public class Musupadi {
     public String BASE_URL(){
-        String BASE_URL = "https://jempol.destinyconsultant.tech";
+        String BASE_URL = "https://www.jempolok.com/";
         return BASE_URL;
     }
     public String AUTH(String auth){

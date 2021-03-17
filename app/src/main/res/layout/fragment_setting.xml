@@ -20,6 +20,7 @@
             android:textColor="@color/colorWhite"
             android:background="@drawable/btn_rounded_primary"/>
         <Button
+            android:visibility="gone"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

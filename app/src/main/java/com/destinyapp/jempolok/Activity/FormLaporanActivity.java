@@ -596,7 +596,7 @@ public class FormLaporanActivity extends AppCompatActivity {
             MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
 
             File file2 = new File(postBukti2);
-            RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file);
+            RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
             MultipartBody.Part partPhoto2 = MultipartBody.Part.createFormData("photo[]", file2.getName(), fileReqBody2);
             Call<ResponseModel> Data = api.Laporan2(
                     musupadi.AUTH(token),
@@ -632,11 +632,11 @@ public class FormLaporanActivity extends AppCompatActivity {
             MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("photo[]", file.getName(), fileReqBody);
 
             File file2 = new File(postBukti2);
-            RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file);
+            RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
             MultipartBody.Part partPhoto2 = MultipartBody.Part.createFormData("photo[]", file2.getName(), fileReqBody2);
 
             File file3 = new File(postBukti3);
-            RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file);
+            RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
             MultipartBody.Part partPhoto3 = MultipartBody.Part.createFormData("photo[]", file3.getName(), fileReqBody3);
 
             Call<ResponseModel> Data = api.Laporan3(

@@ -103,6 +103,10 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.HolderData
         TeknisiDialog = new Dialog(ctx);
         myDialog.setContentView(R.layout.dialog_teknisi);
         TeknisiDialog.setContentView(R.layout.dialog_asign_finish);
+        myDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        myDialog.getWindow().setBackgroundDrawableResource(R.drawable.rounded_btn);
+        TeknisiDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TeknisiDialog.getWindow().setBackgroundDrawableResource(R.drawable.rounded_btn);
         if (dm.getTgl_report()!=null){
             holderData.Tanggal.setText(method.MagicDateChange(dm.getTgl_report()));
         }else{
